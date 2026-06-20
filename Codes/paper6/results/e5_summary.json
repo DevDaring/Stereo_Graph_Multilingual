@@ -1,0 +1,22 @@
+{
+  "n_languages": 3,
+  "n_language_pairs": 6,
+  "mean_circuit_jaccard_paper5": 0.03473333333333333,
+  "mean_bridge_ratio": 0.7667,
+  "mean_lift_over_baseline": 1.031,
+  "bias_type_communities": {
+    "race-color": 948,
+    "socioeconomic": 485,
+    "gender": 697,
+    "disability": 206,
+    "nationality": 361,
+    "sexual-orientation": 133,
+    "physical-appearance": 184,
+    "religion": 159,
+    "age": 249,
+    "caste": 13,
+    "religious": 34,
+    "race": 123
+  },
+  "interpretation": "Circuits are near-disjoint across languages (low Jaccard), yet KG propagation delivers cross-lingual mass concentrated on same_as counterparts (bridge_ratio), evidencing a graph bridge the parameters do not provide."
+}

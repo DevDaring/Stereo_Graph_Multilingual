@@ -1,0 +1,5 @@
+timestamp_utc,subject_model,dataset,circuit_clti,competence_gated_circuit_clti,beats_controls_en,cut_fraction
+2026-06-09T09:47:33Z,qwen2.5-7b,crows_pairs,-0.3539,,True,0.044085
+2026-06-09T11:14:51Z,qwen2.5-7b,indian_bias,0.0665,,True,0.029483
+2026-06-09T13:10:17Z,aya-23-8b,crows_pairs,-0.2815,-0.7747,True,0.056396
+2026-06-09T14:41:21Z,aya-23-8b,indian_bias,1.2056,1.7427,True,0.007568

@@ -1,0 +1,18 @@
+# Paper 6 dependencies. Install into the GLOBAL environment (no venv):
+#   python -m pip install -r requirements.txt
+# flash-attn is installed separately as a PRE-COMPILED wheel:
+#   python GPU_Only/install_flash_attention.py
+torch>=2.3
+transformers>=4.44
+accelerate>=0.33
+bitsandbytes>=0.43
+sentencepiece
+openai>=1.40
+python-dotenv>=1.0
+pandas>=2.0
+numpy>=1.24
+networkx>=3.1
+PyYAML>=6.0
+requests>=2.31
+scikit-learn>=1.3
+tqdm>=4.66

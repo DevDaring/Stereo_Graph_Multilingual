@@ -1,0 +1,5 @@
+timestamp_utc,subject_model,dataset,emergence_band,cut_units,total_units,cut_fraction,seed
+2026-06-09T09:19:13Z,qwen2.5-7b,crows_pairs,7|8|9,474,10752,0.044085,42
+2026-06-09T10:55:08Z,qwen2.5-7b,indian_bias,7|8|9,317,10752,0.029483,42
+2026-06-09T12:33:30Z,aya-23-8b,crows_pairs,29|30|31,693,12288,0.056396,42
+2026-06-09T14:21:57Z,aya-23-8b,indian_bias,10|11|12,93,12288,0.007568,42

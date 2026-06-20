@@ -1,0 +1,127 @@
+# Paper 6 - Knowledge-Graph-Bridged Debiasing.
+# All hyperparameters, paths, model ids, and provider configuration live here.
+# Secrets load from .env at runtime; ONLY env-variable NAMES appear in this repo.
+
+experiment:
+  name: paper6_kg_bridged_debiasing
+  seeds: [42]
+
+# ---------------------------------------------------------------------------
+# Paths. Paper 6 REUSES Papers 1-5 results to avoid recomputing baselines.
+# All relative to Codes/paper6/.
+# ---------------------------------------------------------------------------
+paths:
+  data_raw: ../paper1/data/raw
+  paper2_results: ../paper2/results
+  paper3_results: ../paper3/results
+  paper4_results: ../paper4/results
+  paper5_results: ../paper5/results
+  paper5_src: ../paper5/src          # reused code (LocalCausalLLM, learn_minimal_cut, ...)
+  results: results
+  kg_dir: results/kg
+
+# ---------------------------------------------------------------------------
+# Datasets (identical to Papers 1-5). Both bias CSVs are parallel by `Index`
+# across en/hi/bn - that parallelism is the cross-lingual backbone of the KG.
+# ---------------------------------------------------------------------------
+data:
+  crows_pairs:
+    file: multicrows_pairs.csv
+    languages: [en, hi, bn]
+  indian_bias:
+    file: indian_multilingual_bias.csv
+    languages: [en, hi, bn]
+  hellaswag:
+    file: hellaswag_multilingual_val.jsonl
+    languages: [en, hi, bn]
+    competence_subset_per_language: 500
+
+# ---------------------------------------------------------------------------
+# Models (identical to Papers 1-5).
+# ---------------------------------------------------------------------------
+white_box:
+  encoders:
+    - {hf_id: xlm-roberta-base,             short: xlm-r-base}
+    - {hf_id: google/muril-base-cased,      short: muril-base}
+    - {hf_id: bert-base-multilingual-cased, short: mbert}
+  llms:
+    - {hf_id: Qwen/Qwen2.5-7B-Instruct,     short: qwen2.5-7b}
+    - {hf_id: CohereForAI/aya-23-8B,        short: aya-23-8b}
+
+# Black-box decoders for E4 (expressed-bias) only, via API providers.
+api_predict_only: [gpt-oss-20b, deepseek-chat, llama-3.3-70b]
+
+quantization:                # NF4 4-bit, identical to Paper 1 / 3 / 5
+  load_in_4bit: true
+  bnb_4bit_quant_type: nf4
+  bnb_4bit_compute_dtype: bfloat16
+  bnb_4bit_use_double_quant: true
+
+backbone:
+  use_flash_attention: true  # pre-compiled wheel; see GPU_Only/install_flash_attention.py
+  max_length: 128
+  max_new_tokens: 24
+  encoder_dtype: fp16
+
+# ---------------------------------------------------------------------------
+# Judge / answer-extraction provider.
+# PRIMARY = Gemini 2.5 Flash via 4 GCP keys (round-robin). deepseek/mistral/
+# openrouter are SELECTABLE alternatives. NO automatic cross-provider fallback.
+# ---------------------------------------------------------------------------
+judge:
+  provider: deepseek         # one of: gemini | deepseek | mistral | openrouter
+  temperature: 0.0
+  max_tokens: 24
+  timeout_s: 60
+  providers:
+    gemini:
+      base_url: https://generativelanguage.googleapis.com/v1beta/openai/
+      model: gemini-2.5-flash
+      # Accepts either the GCP_Key* names or the GEMINI_API_KEY_* names; get_keys
+      # uses whichever are present in .env (Google AI Studio keys work on this endpoint).
+      key_env_vars: [GCP_Key1, GCP_Key2, GCP_Key3, GCP_key4,
+                     GEMINI_API_KEY_1, GEMINI_API_KEY_2, GEMINI_API_KEY_3, GEMINI_API_KEY_4]
+      # gemini-2.5-flash is a thinking model; disable thinking so a small max_tokens
+      # still returns visible text (otherwise the budget is spent on reasoning tokens).
+      extra_params: {reasoning_effort: none}
+    deepseek:
+      base_url_env: DEEPSEEK_API_BASE_URL
+      base_url_default: https://api.deepseek.com/v1
+      model: deepseek-chat
+      key_env_vars: [DEEPSEEK_API_KEY_1, DEEPSEEK_API_KEY_2]
+    mistral:
+      base_url_default: https://api.mistral.ai/v1
+      model: mistral-small-latest
+      key_env_vars: [MISTRAL_API_KEY1, MISTRAL_API_KEY2]
+    openrouter:
+      base_url_env: OPENROUTER_API_BASE_URL
+      base_url_default: https://openrouter.ai/api/v1
+      model: meta-llama/llama-3.3-70b-instruct
+      key_env_vars: [OPENROUTER_API_KEY_1, OPENROUTER_API_KEY_2]
+
+# ---------------------------------------------------------------------------
+# Knowledge graph + experiment hyperparameters.
+# ---------------------------------------------------------------------------
+kg:
+  use_conceptnet: false      # optional extension; core KG comes free from parallel data
+  min_edge_weight: 1
+  coverage_target: 0.95
+
+e2_cda:
+  max_counterfactuals_per_edge: 4
+  filter_train_pairs: 48
+  cut_steps: 80
+
+e3_bridge:
+  decoders_only: true        # GPU spent only on the two local decoders
+  emergence_band_k: 3
+  cut_steps: 80
+  reuse_band: true           # reuse Paper 4/5 emergence band; do not re-localise globally
+
+e4_kgrag:
+  max_neighbours: 3
+  max_pairs_per_lang: 300
+
+e5_propagation:
+  pagerank_alpha: 0.85
+  max_iter: 100

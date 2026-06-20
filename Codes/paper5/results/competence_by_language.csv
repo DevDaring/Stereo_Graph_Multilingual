@@ -1,0 +1,7 @@
+timestamp_utc,subject_model,language,hellaswag_accuracy,fluency_nll,n,chance,adequate
+2026-06-09T08:56:25Z,qwen2.5-7b,en,0.6,3.7317,500,0.25,True
+2026-06-09T08:56:25Z,qwen2.5-7b,bn,0.298,1.167,500,0.25,False
+2026-06-09T08:56:25Z,qwen2.5-7b,hi,0.314,1.2825,500,0.25,False
+2026-06-09T12:00:30Z,aya-23-8b,en,0.588,3.4694,500,0.25,True
+2026-06-09T12:00:30Z,aya-23-8b,bn,0.282,1.5176,500,0.25,False
+2026-06-09T12:00:30Z,aya-23-8b,hi,0.4,1.4449,500,0.25,True

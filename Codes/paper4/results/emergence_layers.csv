@@ -1,0 +1,11 @@
+timestamp_utc,subject_model,dataset,language,emergence_band,peak_layer
+2026-06-09T10:05:42Z,qwen2.5-7b,crows_pairs,en,7|8|9,8
+2026-06-09T10:47:27Z,qwen2.5-7b,indian_bias,en,7|8|9,8
+2026-06-09T11:29:08Z,aya-23-8b,crows_pairs,en,29|30|31,30
+2026-06-09T12:15:32Z,aya-23-8b,indian_bias,en,10|11|12,11
+2026-06-09T17:59:31Z,xlm-r-base,crows_pairs,en,5|10|11,11
+2026-06-09T19:38:20Z,xlm-r-base,indian_bias,en,8|9|10,9
+2026-06-09T20:22:00Z,muril-base,crows_pairs,en,1|5|10,5
+2026-06-09T21:46:21Z,muril-base,indian_bias,en,0|1|3,1
+2026-06-09T22:21:56Z,mbert,crows_pairs,en,10|11|12,11
+2026-06-10T00:00:49Z,mbert,indian_bias,en,10|11|12,11

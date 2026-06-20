@@ -1,0 +1,11 @@
+{
+  "n_nodes": 10141,
+  "n_group_nodes": 3592,
+  "n_context_nodes": 6549,
+  "n_edges": 23985,
+  "n_same_as_edges": 10887,
+  "n_canonical_concepts": 3109,
+  "coverage": 1.0,
+  "coverage_target": 0.95,
+  "use_conceptnet": false
+}

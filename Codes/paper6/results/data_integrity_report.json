@@ -1,0 +1,36 @@
+{
+  "datasets": [
+    {
+      "dataset": "crows_pairs",
+      "file": "multicrows_pairs.csv",
+      "sha256": "5d5f9715c458228f5ca08e4bd61c2813c286909faa53313beb12f030273db38a",
+      "n_rows": 4266,
+      "n_alignment_units": 1422,
+      "duplicate_rows": 0,
+      "duplicate_unique_keys": 0,
+      "duplicate_key_examples": {},
+      "corruption": {
+        "missing_mask_slot": 1
+      },
+      "units_missing_a_language": 0,
+      "missing_parallel_examples": [],
+      "hard_corruption_count": 0,
+      "status": "ok"
+    },
+    {
+      "dataset": "indian_bias",
+      "file": "indian_multilingual_bias.csv",
+      "sha256": "f22fce44ee8a0a6fb4a8fa85b496359246c49421f38497b03521d4760b695cb4",
+      "n_rows": 2283,
+      "n_alignment_units": 761,
+      "duplicate_rows": 0,
+      "duplicate_unique_keys": 0,
+      "duplicate_key_examples": {},
+      "corruption": {},
+      "units_missing_a_language": 0,
+      "missing_parallel_examples": [],
+      "hard_corruption_count": 0,
+      "status": "ok"
+    }
+  ]
+}

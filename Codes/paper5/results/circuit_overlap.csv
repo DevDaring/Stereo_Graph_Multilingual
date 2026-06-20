@@ -1,0 +1,10 @@
+timestamp_utc,subject_model,dataset,lang_a,lang_b,jaccard
+2026-06-09T10:26:56Z,qwen2.5-7b,crows_pairs,en,hi,0.0388
+2026-06-09T10:26:56Z,qwen2.5-7b,crows_pairs,en,bn,0.0343
+2026-06-09T10:26:56Z,qwen2.5-7b,crows_pairs,hi,bn,0.0617
+2026-06-09T11:53:34Z,qwen2.5-7b,indian_bias,en,hi,0.0258
+2026-06-09T11:53:34Z,qwen2.5-7b,indian_bias,en,bn,0.0224
+2026-06-09T11:53:34Z,qwen2.5-7b,indian_bias,hi,bn,0.0509
+2026-06-09T13:51:23Z,aya-23-8b,crows_pairs,en,hi,0.0238
+2026-06-09T13:51:23Z,aya-23-8b,crows_pairs,en,bn,0.0259
+2026-06-09T13:51:23Z,aya-23-8b,crows_pairs,hi,bn,0.029
