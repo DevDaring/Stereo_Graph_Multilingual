@@ -3,7 +3,7 @@
     {
       "dataset": "crows_pairs",
       "file": "multicrows_pairs.csv",
-      "sha256": "5d5f9715c458228f5ca08e4bd61c2813c286909faa53313beb12f030273db38a",
+      "sha256": "46fc39eeb00c5fdd757e70be32a0aa5875247d4bd183bf2c937e3fce59369dd9",
       "n_rows": 4266,
       "n_alignment_units": 1422,
       "duplicate_rows": 0,
@@ -20,7 +20,7 @@
     {
       "dataset": "indian_bias",
       "file": "indian_multilingual_bias.csv",
-      "sha256": "f22fce44ee8a0a6fb4a8fa85b496359246c49421f38497b03521d4760b695cb4",
+      "sha256": "d9a2be763a4508cc4e1e9dc727d37d56f09b49ddfb73a82fd0d06350ca2d36a9",
       "n_rows": 2283,
       "n_alignment_units": 761,
       "duplicate_rows": 0,

@@ -4,7 +4,7 @@
       "provider": "gemini",
       "model": "gemini-2.5-flash",
       "base_url": "https://generativelanguage.googleapis.com/v1beta/openai/",
-      "n_keys_found": 4,
+      "n_keys_found": 0,
       "key_env_vars": [
         "GCP_Key1",
         "GCP_Key2",
@@ -15,29 +15,8 @@
         "GEMINI_API_KEY_3",
         "GEMINI_API_KEY_4"
       ],
-      "keys": [
-        {
-          "key_index": 1,
-          "status": "ok",
-          "detail": "ok"
-        },
-        {
-          "key_index": 2,
-          "status": "fail",
-          "detail": "RuntimeError: Judge provider 'gemini' failed: Error code: 400 - [{'error': {'code': 400, 'message': 'Please pass a valid API key', 'status': 'INVALID_ARGUMENT'}}]"
-        },
-        {
-          "key_index": 3,
-          "status": "ok",
-          "detail": "ok"
-        },
-        {
-          "key_index": 4,
-          "status": "ok",
-          "detail": "ok"
-        }
-      ],
-      "any_ok": true
+      "keys": [],
+      "any_ok": false
     },
     {
       "provider": "deepseek",
@@ -66,47 +45,25 @@
       "provider": "mistral",
       "model": "mistral-small-latest",
       "base_url": "https://api.mistral.ai/v1",
-      "n_keys_found": 2,
+      "n_keys_found": 0,
       "key_env_vars": [
         "MISTRAL_API_KEY1",
         "MISTRAL_API_KEY2"
       ],
-      "keys": [
-        {
-          "key_index": 1,
-          "status": "ok",
-          "detail": "ok"
-        },
-        {
-          "key_index": 2,
-          "status": "ok",
-          "detail": "ok"
-        }
-      ],
-      "any_ok": true
+      "keys": [],
+      "any_ok": false
     },
     {
       "provider": "openrouter",
       "model": "meta-llama/llama-3.3-70b-instruct",
       "base_url": "https://openrouter.ai/api/v1",
-      "n_keys_found": 2,
+      "n_keys_found": 0,
       "key_env_vars": [
         "OPENROUTER_API_KEY_1",
         "OPENROUTER_API_KEY_2"
       ],
-      "keys": [
-        {
-          "key_index": 1,
-          "status": "ok",
-          "detail": "ok"
-        },
-        {
-          "key_index": 2,
-          "status": "ok",
-          "detail": "ok"
-        }
-      ],
-      "any_ok": true
+      "keys": [],
+      "any_ok": false
     }
   ],
   "local_models": [
@@ -142,8 +99,8 @@
       "short": "gpt-oss-20b",
       "configured": true,
       "model": "openai/gpt-oss-20b",
-      "status": "ok",
-      "detail": "ok"
+      "status": "no_keys_or_route",
+      "detail": ""
     },
     {
       "short": "deepseek-chat",
@@ -156,8 +113,8 @@
       "short": "llama-3.3-70b",
       "configured": true,
       "model": "meta-llama/llama-3.3-70b-instruct",
-      "status": "ok",
-      "detail": "ok"
+      "status": "no_keys_or_route",
+      "detail": ""
     }
   ],
   "huggingface_token_present": true

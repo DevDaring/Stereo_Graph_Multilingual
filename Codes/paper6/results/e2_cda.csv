@@ -1,0 +1,6 @@
+subject_model,dataset,language,method,bias_baseline,bias_after,bias_reduction,n_pairs,seed,status
+qwen2.5-7b,crows_pairs,en,no_cda,60.38,58.4799,1.9001,1421,42,ok
+qwen2.5-7b,indian_bias,en,no_cda,61.9236,62.0553,-0.1317,759,42,ok
+qwen2.5-7b,crows_pairs,en,random_cda,58.3333,56.25,2.0833,211,240,42,ok
+qwen2.5-7b,crows_pairs,en,kg_cda,58.3333,58.3333,0.0,209,240,42,ok
+qwen2.5-7b,indian_bias,en,random_cda,64.5833,62.5,2.0833,185,240,42,ok

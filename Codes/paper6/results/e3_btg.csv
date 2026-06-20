@@ -1,0 +1,9 @@
+subject_model,dataset,target_lang,fbr_direct,fbr_kg_bridged,btg,competence_ok,status
+qwen2.5-7b,crows_pairs,hi,1.4132,0.5634,-0.8498,False,ok
+qwen2.5-7b,crows_pairs,bn,2.6017,-1.2712,-3.8729,False,ok
+qwen2.5-7b,indian_bias,hi,-3.0474,-0.2681,2.7793,False,ok
+qwen2.5-7b,indian_bias,bn,-5.9964,0.4011,6.3975,False,ok
+aya-23-8b,crows_pairs,hi,0.4695,-0.7747,-1.2442,True,ok
+aya-23-8b,crows_pairs,bn,-0.2458,0.2118,0.4576,False,ok
+aya-23-8b,indian_bias,hi,-4.79,1.7427,6.5327,True,ok
+aya-23-8b,indian_bias,bn,6.0357,0.6685,-5.3672,False,ok
