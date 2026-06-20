@@ -1,0 +1,2 @@
+subject_model,dataset,language,condition,expressed_bias,deviation,n_decided,refusals,status
+qwen2.5-7b,crows_pairs,en,no_rag,69.0,19.0,300,0,ok
