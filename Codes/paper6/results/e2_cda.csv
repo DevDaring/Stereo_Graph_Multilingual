@@ -9,3 +9,4 @@ aya-23-8b,crows_pairs,en,no_cda,61.506,58.4799,3.0261,1421,42,ok
 aya-23-8b,indian_bias,en,no_cda,58.3663,58.3663,0.0,759,42,ok
 aya-23-8b,crows_pairs,en,random_cda,64.5833,68.75,-4.1667,212,240,42,ok
 aya-23-8b,crows_pairs,en,kg_cda,64.5833,68.75,-4.1667,213,240,42,ok
+aya-23-8b,indian_bias,en,random_cda,58.3333,60.4167,-2.0833,177,240,42,ok
