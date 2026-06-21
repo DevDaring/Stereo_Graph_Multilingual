@@ -1,0 +1,23 @@
+=== STEP 06  E4 KG-RAG (API subjects) ===
+  gpt-oss-20b/crows_pairs/en: KG-RAG gain=+1.00
+  gpt-oss-20b/crows_pairs/hi: KG-RAG gain=+3.00
+  gpt-oss-20b/crows_pairs/bn: KG-RAG gain=+1.00
+  gpt-oss-20b/indian_bias/en: KG-RAG gain=-5.00
+  gpt-oss-20b/indian_bias/hi: KG-RAG gain=-2.00
+  gpt-oss-20b/indian_bias/bn: KG-RAG gain=-2.00
+  gpt-oss-20b: done.
+  deepseek-chat/crows_pairs/en: KG-RAG gain=-1.00
+  deepseek-chat/crows_pairs/hi: KG-RAG gain=-12.00
+  deepseek-chat/crows_pairs/bn: KG-RAG gain=-9.00
+  deepseek-chat/indian_bias/en: KG-RAG gain=+30.00
+  deepseek-chat/indian_bias/hi: KG-RAG gain=-3.00
+  deepseek-chat/indian_bias/bn: KG-RAG gain=-12.00
+  deepseek-chat: done.
+  llama-3.3-70b/crows_pairs/en: KG-RAG gain=+14.00
+  llama-3.3-70b/crows_pairs/hi: KG-RAG gain=-8.00
+  llama-3.3-70b/crows_pairs/bn: KG-RAG gain=-20.00
+  llama-3.3-70b/indian_bias/en: KG-RAG gain=+31.00
+  llama-3.3-70b/indian_bias/hi: KG-RAG gain=-1.00
+  llama-3.3-70b/indian_bias/bn: KG-RAG gain=+6.00
+  llama-3.3-70b: done.
+  written: D:\PhD\Graph_Based_Transformer\Codes\paper6\results\e4_kgrag_api.csv

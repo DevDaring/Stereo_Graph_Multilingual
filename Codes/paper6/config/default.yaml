@@ -120,7 +120,8 @@ e3_bridge:
 
 e4_kgrag:
   max_neighbours: 3
-  max_pairs_per_lang: 300
+  max_pairs_per_lang: 300        # local decoders (E4-local, step 07)
+  max_pairs_per_lang_api: 100    # black-box API subjects (E4-API, step 06): smaller, API-cost bound
 
 e5_propagation:
   pagerank_alpha: 0.85

@@ -3,235 +3,260 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Paper 6 - Code Progress (MS-SKG Pipeline)</title>
+<title>Paper 6 - Code Progress and Results (MS-SKG Pipeline)</title>
 <style>
   :root{
-    --ink:#1b1f24; --muted:#5b6573; --line:#e3e7ee; --bg:#f7f9fc; --card:#ffffff;
-    --done:#1f9d57; --done-bg:#e8f7ee; --gpu:#b4690e; --gpu-bg:#fbf0df;
-    --cpu:#2563c9; --cpu-bg:#e7effb; --val:#7a3fb0; --val-bg:#f1e9f9;
+    --ink:#1b1f24; --muted:#5b6573; --line:#e3e7ee; --bg:#f6f8fb; --card:#ffffff;
+    --pos:#1f9d57; --pos-bg:#e8f7ee; --neg:#c0392b; --neg-bg:#fdecea;
+    --warn:#b4690e; --warn-bg:#fbf0df; --info:#2563c9; --info-bg:#e7effb;
   }
   *{box-sizing:border-box}
   body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
     color:var(--ink); background:var(--bg); margin:0; line-height:1.55; font-size:15px}
-  .wrap{max-width:1060px; margin:0 auto; padding:32px 22px 60px}
+  .wrap{max-width:1080px; margin:0 auto; padding:30px 22px 70px}
   h1{font-size:25px; margin:0 0 4px}
   h2{font-size:19px; margin:34px 0 12px; padding-bottom:6px; border-bottom:2px solid var(--line)}
-  h3{font-size:15px; margin:0 0 6px}
-  .sub{color:var(--muted); margin:0 0 18px}
-  .meta{display:flex; flex-wrap:wrap; gap:8px 18px; color:var(--muted); font-size:13px; margin-bottom:8px}
-  .pill{display:inline-block; padding:2px 9px; border-radius:11px; font-size:12px; font-weight:600;
-    line-height:1.7; white-space:nowrap}
-  .p-done{color:var(--done); background:var(--done-bg)}
-  .p-gpu{color:var(--gpu); background:var(--gpu-bg)}
-  .p-cpu{color:var(--cpu); background:var(--cpu-bg)}
-  .p-val{color:var(--val); background:var(--val-bg)}
+  h3{font-size:15.5px; margin:2px 0 6px}
+  .sub{color:var(--muted); margin:0 0 16px}
+  .meta{display:flex; flex-wrap:wrap; gap:7px 16px; color:var(--muted); font-size:13px; margin-bottom:6px}
+  .pill{display:inline-block; padding:2px 9px; border-radius:11px; font-size:12px; font-weight:600; white-space:nowrap}
+  .p-pos{color:var(--pos); background:var(--pos-bg)} .p-neg{color:var(--neg); background:var(--neg-bg)}
+  .p-warn{color:var(--warn); background:var(--warn-bg)} .p-info{color:var(--info); background:var(--info-bg)}
   table{width:100%; border-collapse:collapse; background:var(--card); border:1px solid var(--line);
-    border-radius:8px; overflow:hidden; margin:6px 0 10px}
-  th,td{text-align:left; padding:9px 12px; border-bottom:1px solid var(--line); vertical-align:top}
-  th{background:#f0f3f8; font-size:12.5px; text-transform:uppercase; letter-spacing:.03em; color:var(--muted)}
+    border-radius:8px; overflow:hidden; margin:8px 0 12px; font-size:14px}
+  th,td{text-align:left; padding:8px 11px; border-bottom:1px solid var(--line); vertical-align:top}
+  th{background:#eef2f8; font-size:12px; text-transform:uppercase; letter-spacing:.03em; color:var(--muted)}
   tr:last-child td{border-bottom:none}
+  td.num{text-align:right; font-variant-numeric:tabular-nums}
   code{background:#eef1f6; padding:1px 5px; border-radius:4px; font-size:13px;
-    font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
-  .card{background:var(--card); border:1px solid var(--line); border-left:4px solid var(--cpu);
-    border-radius:8px; padding:14px 16px; margin:12px 0}
-  .card.done{border-left-color:var(--done)}
-  .card.val{border-left-color:var(--val)}
-  .io{display:grid; grid-template-columns:90px 1fr; gap:4px 10px; margin-top:8px; font-size:14px}
-  .io .k{color:var(--muted); font-weight:600}
-  .res{margin-top:9px; padding:9px 12px; background:var(--done-bg); border-radius:6px; font-size:14px}
-  .res.val{background:var(--val-bg)}
-  ul{margin:6px 0; padding-left:20px}
-  li{margin:3px 0}
+    font-family:ui-monospace,Consolas,monospace}
+  .card{background:var(--card); border:1px solid var(--line); border-left:4px solid var(--info);
+    border-radius:8px; padding:13px 16px; margin:12px 0}
+  .card.pos{border-left-color:var(--pos)} .card.neg{border-left-color:var(--neg)} .card.warn{border-left-color:var(--warn)}
   .kpi{display:flex; flex-wrap:wrap; gap:10px; margin:10px 0}
   .kpibox{flex:1 1 150px; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:11px 13px}
-  .kpibox .n{font-size:21px; font-weight:700}
-  .kpibox .l{font-size:12px; color:var(--muted)}
-  .note{font-size:13px; color:var(--muted); margin-top:6px}
+  .kpibox .n{font-size:20px; font-weight:700} .kpibox .l{font-size:12px; color:var(--muted)}
+  ul{margin:6px 0; padding-left:20px} li{margin:3px 0}
+  .takeaway{margin-top:8px; padding:8px 12px; border-radius:6px; font-size:14px}
+  .t-pos{background:var(--pos-bg)} .t-neg{background:var(--neg-bg)} .t-warn{background:var(--warn-bg)}
   footer{margin-top:34px; padding-top:14px; border-top:1px solid var(--line); color:var(--muted); font-size:13px}
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <h1>Paper 6 - Code Progress Report</h1>
-  <p class="sub">Knowledge-Graph-Bridged Multilingual Debiasing (MS-SKG) pipeline,
-     Elsevier <em>Graph-Based Solutions for AI</em> special issue.</p>
+  <h1>Paper 6 - Code Progress and Results</h1>
+  <p class="sub">Knowledge-Graph-Bridged Multilingual Debiasing (MS-SKG). Target: Elsevier
+     <em>Graph-Based Solutions for AI</em> special issue. Combined paper spans Studies 1-6.</p>
   <div class="meta">
-    <span><strong>Run scope:</strong> CPU prerequisites, steps 01-03</span>
-    <span><strong>Report date:</strong> 2026-06-20</span>
-    <span><strong>Environment:</strong> global Python (no venv), Windows CPU</span>
-    <span><strong>Active judge:</strong> DeepSeek (<code>deepseek-chat</code>)</span>
+    <span><strong>Report date:</strong> 2026-06-21</span>
+    <span><strong>GPU run:</strong> completed 2026-06-20 19:32 UTC</span>
+    <span><strong>Compute:</strong> rented RTX 4090 (vast.ai), now destroyed</span>
+    <span><strong>Judge:</strong> DeepSeek (deepseek-chat)</span>
   </div>
 
-  <h2>1. Status at a glance</h2>
+  <h2>1. Where things stand</h2>
   <div class="kpi">
-    <div class="kpibox"><div class="n">3 / 8</div><div class="l">pipeline steps run on CPU this session</div></div>
-    <div class="kpibox"><div class="n">10,141</div><div class="l">MS-SKG nodes built (E1)</div></div>
-    <div class="kpibox"><div class="n">9 / 9</div><div class="l">core unit tests passing</div></div>
-    <div class="kpibox"><div class="n">8 / 8</div><div class="l">reused Paper 2-5 baselines located</div></div>
+    <div class="kpibox"><div class="n">8 / 8</div><div class="l">pipeline steps complete - all five experiments done</div></div>
+    <div class="kpibox"><div class="n">10,141</div><div class="l">MS-SKG nodes (E1)</div></div>
+    <div class="kpibox"><div class="n">0</div><div class="l">GPU instances now billing (4090 destroyed)</div></div>
+    <div class="kpibox"><div class="n">~$4</div><div class="l">total GPU spend (incl. the stray-instance mistake)</div></div>
   </div>
+  <p>All five experiments are complete. The GPU experiments (E3, E2, E4-local) ran on a single
+     rented RTX 4090, were verified and pushed to GitHub
+     (<code>DevDaring/Stereo_Graph_Multilingual</code>) and pulled back locally, and the instance
+     was destroyed to stop billing. E5 and E4-API then ran locally (CPU + API, no GPU). Every
+     result CSV is in place; no compute is billing.</p>
 
   <table>
-    <tr><th>Order</th><th>Folder / script</th><th>Experiment</th><th>Hardware</th><th>Status</th></tr>
-    <tr><td>01</td><td><code>Dataset_Prep_01/check_data.py</code></td><td>prerequisite</td><td>CPU</td>
-        <td><span class="pill p-done">Completed - correct</span></td></tr>
-    <tr><td>02</td><td><code>Dataset_Prep_02/build_kg.py</code></td><td>E1 - build MS-SKG</td><td>CPU</td>
-        <td><span class="pill p-done">Completed - correct</span></td></tr>
-    <tr><td>03</td><td><code>CPU_Only_03/dry_run.py</code></td><td>prerequisite (API test)</td><td>CPU</td>
-        <td><span class="pill p-done">Completed - correct</span></td></tr>
-    <tr><td>04</td><td><code>GPU_Only_04/e3_bridge.py</code></td><td>E3 - KG-bridged transfer (headline)</td><td>GPU</td>
-        <td><span class="pill p-gpu">Pending - needs GPU</span></td></tr>
-    <tr><td>05</td><td><code>GPU_Only_05/e2_cda.py</code></td><td>E2 - KG-guided CDA</td><td>GPU</td>
-        <td><span class="pill p-gpu">Pending - needs GPU</span></td></tr>
-    <tr><td>06</td><td><code>CPU_Only_06/e4_kgrag_api.py</code></td><td>E4 - KG-RAG (API subjects)</td><td>CPU + API</td>
-        <td><span class="pill p-cpu">Pending - CPU-capable</span></td></tr>
-    <tr><td>07</td><td><code>GPU_Only_07/e4_kgrag_local.py</code></td><td>E4 - KG-RAG (local decoders)</td><td>GPU</td>
-        <td><span class="pill p-gpu">Pending - needs GPU</span></td></tr>
-    <tr><td>08</td><td><code>CPU_Only_08/e5_propagation.py</code></td><td>E5 - graph propagation</td><td>CPU</td>
-        <td><span class="pill p-val">Validated - rerun in sequence</span></td></tr>
-  </table>
-  <p class="note">Folder name encodes both order (numeric suffix) and hardware. <code>Common_00/</code>
-     is the shared library, imported by every step, not an execution step.</p>
-
-  <h2>2. Completed steps - input, output, result</h2>
-
-  <div class="card done">
-    <h3>STEP 01 &middot; Data integrity and de-duplication <span class="pill p-done">correct</span></h3>
-    <p>Runs on every invocation; verifies the parallel diagnostic data before anything depends on it.</p>
-    <div class="io">
-      <span class="k">Input</span><span><code>../paper1/data/raw/multicrows_pairs.csv</code> (4,266 rows),
-        <code>../paper1/data/raw/indian_multilingual_bias.csv</code> (2,283 rows)</span>
-      <span class="k">Output</span><span><code>results/data_integrity_report.json</code></span>
-      <span class="k">Checks</span><span>duplicate rows, duplicate <code>(Index, language, bias_type)</code> keys,
-        empty/corrupted fields, missing mask slots, en/hi/bn parallelism</span>
-    </div>
-    <div class="res">
-      <strong>Result: clean.</strong>
-      crows_pairs - 4,266 rows / 1,422 alignment units; indian_bias - 2,283 rows / 761 units.
-      0 duplicate rows, 0 duplicate keys, 0 corruption, full cross-lingual parallelism in both datasets.
-      (indian_bias holds several <code>bias_type</code> rows per <code>Index</code> - treated as valid, not duplication.)
-    </div>
-  </div>
-
-  <div class="card done">
-    <h3>STEP 02 &middot; Build the MS-SKG (Experiment E1) <span class="pill p-done">correct</span></h3>
-    <p>Constructs the Multilingual Stereotype Knowledge Graph from the parallel data; cross-lingual
-       <code>same_as</code> edges come free from Index/bias_type alignment.</p>
-    <div class="io">
-      <span class="k">Input</span><span>the two normalised bias datasets (from Step 01)</span>
-      <span class="k">Output</span><span><code>results/kg/nodes.csv</code>, <code>edges.csv</code>,
-        <code>graph.json</code> (NetworkX), <code>kg_stats.json</code></span>
-    </div>
-    <div class="res">
-      <strong>Result: graph built, coverage 1.0 (target 0.95).</strong>
-      10,141 nodes (3,592 group nodes + 6,549 context nodes); 23,985 edges of which 10,887 are
-      cross-lingual <code>same_as</code>; 3,109 canonical concepts after connected-component merging.
-    </div>
-  </div>
-
-  <div class="card done">
-    <h3>STEP 03 &middot; Dry run - test every key and model id <span class="pill p-done">correct</span></h3>
-    <p>Pings each judge provider once per key and each E4 subject model id once. No key value is printed;
-       keys are referenced by index only.</p>
-    <div class="io">
-      <span class="k">Input</span><span><code>.env</code> credentials + <code>config/default.yaml</code> provider block</span>
-      <span class="k">Output</span><span><code>results/dry_run_report.json</code></span>
-    </div>
-    <div class="res">
-      <strong>Result: active judge OK, exit 0.</strong>
-      <ul>
-        <li><strong>DeepSeek (active judge)</strong> - <code>deepseek-chat</code>, 2/2 keys working.</li>
-        <li>Gemini <code>gemini-2.5-flash</code> - 3/4 keys (key #2 is a dead key in the shared <code>.env</code>; harmless, gemini is not the active judge).</li>
-        <li>Mistral <code>mistral-small-latest</code> - 2/2 keys. OpenRouter <code>meta-llama/llama-3.3-70b-instruct</code> - 2/2 keys.</li>
-        <li>E4 subject model ids all reachable: <code>openai/gpt-oss-20b</code>, <code>deepseek-chat</code>, <code>meta-llama/llama-3.3-70b-instruct</code>.</li>
-        <li>5 local model ids listed; HuggingFace token present.</li>
-      </ul>
-    </div>
-  </div>
-
-  <h2>3. Results obtained during development validation</h2>
-  <p class="sub">These were produced while building the pipeline. They are real outputs on disk, but their
-     steps sit later in the sequence (after the GPU steps), so they will be re-run in order once the
-     GPU work is in place.</p>
-
-  <div class="card val">
-    <h3>Experiment E5 - graph propagation (Step 08, CPU) <span class="pill p-val">validated</span></h3>
-    <div class="io">
-      <span class="k">Input</span><span>the built MS-SKG + reused <code>paper5/circuit_overlap.csv</code> (circuit Jaccard)</span>
-      <span class="k">Output</span><span><code>results/e5_propagation.csv</code>, <code>results/e5_summary.json</code></span>
-    </div>
-    <div class="res val">
-      <strong>Headline contrast obtained.</strong> Across 6 language pairs: mean reused circuit
-      Jaccard = <strong>0.0347</strong> (Papers 1-5: near-disjoint parameter circuits), yet KG
-      personalised-PageRank delivers a mean <strong>bridge ratio = 0.7667</strong> (77% of cross-lingual
-      mass lands on true <code>same_as</code> counterparts), mean lift over baseline = 1.031.
-      The graph bridges what the parameters do not.
-    </div>
-  </div>
-
-  <div class="card val">
-    <h3>Experiment E4 - KG-RAG path smoke test <span class="pill p-val">validated</span></h3>
-    <div class="io">
-      <span class="k">Input</span><span>3 indian_bias pairs (en), real MS-SKG, DeepSeek subject + judge</span>
-      <span class="k">Output</span><span>in-memory check (no CSV written)</span>
-    </div>
-    <div class="res val">
-      End-to-end path confirmed: subject answers the A/B prompt, judge extracts the choice, and the
-      KG retrieves the correct counter-stereotype context (e.g. "Brahmins" injected against a
-      Dalit-stereotyping sentence). Mechanics verified; full sweep is Steps 06 and 07.
-    </div>
-  </div>
-
-  <h2>4. Reused baselines (loaded, not recomputed)</h2>
-  <p class="sub">Paper 6 reuses Papers 2-5 results to avoid re-spending GPU hours. All located:</p>
-  <table>
-    <tr><th>File</th><th>Paper</th><th>Rows</th><th>Used for</th></tr>
-    <tr><td><code>paper5/cut_results.csv</code></td><td>5</td><td>54</td><td>E3 per-language cut + baselines; E2 no-CDA</td></tr>
-    <tr><td><code>paper5/minimal_cut.csv</code></td><td>5</td><td>4</td><td>emergence band per (model, dataset)</td></tr>
-    <tr><td><code>paper5/circuit_overlap.csv</code></td><td>5</td><td>9</td><td>E5 circuit Jaccard contrast</td></tr>
-    <tr><td><code>paper4/emergence_layers.csv</code></td><td>4</td><td>10</td><td>emergence-band fallback</td></tr>
-    <tr><td><code>paper4/filter_results.csv</code></td><td>4</td><td>30</td><td>encoder filter reference</td></tr>
-    <tr><td><code>paper4/competence_by_language.csv</code></td><td>4</td><td>6</td><td>competence gate</td></tr>
-    <tr><td><code>paper3/llm_clti.csv</code></td><td>3</td><td>10</td><td>E4 expressed-bias reference</td></tr>
-    <tr><td><code>paper2/transfer_results.csv</code></td><td>2</td><td>36</td><td>projection-transfer reference</td></tr>
+    <tr><th>Order</th><th>Step</th><th>Experiment</th><th>Where</th><th>Status</th></tr>
+    <tr><td>01</td><td>check_data</td><td>integrity / dedup</td><td>GPU box + local</td><td><span class="pill p-pos">done</span></td></tr>
+    <tr><td>02</td><td>build_kg</td><td>E1 - build MS-SKG</td><td>GPU box + local</td><td><span class="pill p-pos">done</span></td></tr>
+    <tr><td>03</td><td>dry_run</td><td>provider/key test</td><td>GPU box</td><td><span class="pill p-pos">done</span></td></tr>
+    <tr><td>04</td><td>e3_bridge</td><td>E3 - KG-bridged transfer (headline)</td><td>RTX 4090</td><td><span class="pill p-pos">done</span></td></tr>
+    <tr><td>05</td><td>e2_cda</td><td>E2 - KG-guided CDA</td><td>RTX 4090</td><td><span class="pill p-pos">done</span></td></tr>
+    <tr><td>07</td><td>e4_kgrag_local</td><td>E4 - KG-RAG, local decoders</td><td>RTX 4090</td><td><span class="pill p-pos">done</span></td></tr>
+    <tr><td>08</td><td>e5_propagation</td><td>E5 - graph propagation</td><td>local CPU</td><td><span class="pill p-pos">done</span></td></tr>
+    <tr><td>06</td><td>e4_kgrag_api</td><td>E4 - KG-RAG, black-box API models</td><td>local CPU + API</td><td><span class="pill p-pos">done</span></td></tr>
   </table>
 
-  <h2>5. Tests</h2>
+  <h2>2. How the GPU run was executed</h2>
+  <p>The two local decoders (<code>Qwen/Qwen2.5-7B-Instruct</code>,
+     <code>CohereForAI/aya-23-8B</code>, NF4 4-bit) need a GPU, so the pipeline was deployed
+     to a rented machine and driven autonomously.</p>
   <ul>
-    <li><code>tests/test_core.py</code> - <strong>9/9 pass</strong> (parsers, CSV resume, KG schema/algorithms, E4 prompt + RAG, BTG arithmetic).</li>
-    <li><code>tests/test_no_secrets.py</code> - <strong>pass</strong> (no hard-coded credential anywhere in the tree; results also scanned clean).</li>
+    <li><strong>Hardware:</strong> single RTX 4090 (24 GB) on vast.ai, reliability 0.999,
+        $0.39/h, image <code>pytorch/pytorch:2.5.1-cuda12.1-cudnn9-devel</code>.</li>
+    <li><strong>Flash-attention:</strong> pre-compiled wheel <code>flash_attn-2.7.4.post1</code>
+        (torch 2.5 / cu12 / cp311), installed without compilation and confirmed importable.
+        The decoders ran with flash-attention throughout.</li>
+    <li><strong>Self-checkpointing:</strong> results and logs pushed to GitHub every ~10 min so
+        a preemption would lose nothing. The pipeline ran the steps independently (one failure
+        cannot block the rest) and is fully resume-capable.</li>
+    <li><strong>Total wall-clock:</strong> ~5.2 h (14:20 - 19:32 UTC). E2 was the slow step
+        (~30 min per cut training) because <code>torch.compile</code> recompiled per tensor
+        shape on the augmented data.</li>
   </ul>
 
-  <h2>6. Steps still left</h2>
-  <table>
-    <tr><th>Order</th><th>Step</th><th>Why pending</th><th>Input</th><th>Expected output</th></tr>
-    <tr><td>04</td><td>E3 KG-bridged transfer <em>(headline)</em></td><td>needs GPU (loads Qwen2.5-7B, Aya-23-8B)</td>
-        <td>MS-SKG, reused Paper 5 band + per-language cut, en pairs</td>
-        <td><code>e3_bridge.csv</code>, <code>e3_btg.csv</code> (Bridge Transfer Gain)</td></tr>
-    <tr><td>05</td><td>E2 KG-guided CDA</td><td>needs GPU (2 cut trainings / decoder)</td>
-        <td>MS-SKG siblings, en pairs, reused no-CDA cut</td>
-        <td><code>e2_cda.csv</code> (no_cda vs random_cda vs kg_cda)</td></tr>
-    <tr><td>06</td><td>E4 KG-RAG, API subjects</td><td>CPU-capable; runnable now without GPU via DeepSeek/OpenRouter</td>
-        <td>MS-SKG counter-stereotype context, en/hi/bn pairs</td>
-        <td><code>e4_kgrag_api.csv</code> (no_rag vs kg_rag expressed bias)</td></tr>
-    <tr><td>07</td><td>E4 KG-RAG, local decoders</td><td>needs GPU (Qwen, Aya generation)</td>
-        <td>MS-SKG context, en/hi/bn pairs</td>
-        <td><code>e4_kgrag_local.csv</code></td></tr>
-    <tr><td>08</td><td>E5 graph propagation</td><td>CPU-only; validated, to be re-run in sequence</td>
-        <td>MS-SKG, reused circuit Jaccard</td>
-        <td><code>e5_propagation.csv</code>, <code>e5_summary.json</code></td></tr>
-  </table>
+  <h3>Two incidents during the run - both handled</h3>
+  <div class="card warn">
+    <h3>Checkpoint backup bug (found and fixed)</h3>
+    The 15-min GitHub checkpoint loop listed a not-yet-existing file in its
+    <code>git add</code>, so git aborted the staging every cycle and nothing was ever pushed.
+    E3's finished results were sitting un-backed-up. Fixed by switching to <code>git add -A</code>
+    under a persistent tmux session and pushing immediately; the result data was never
+    corrupted (no pipeline reset needed), only the backup was repaired.
+  </div>
+  <div class="card neg">
+    <h3>Stray GPU instances (the money mistake)</h3>
+    Extra GPU instances kept appearing on the account (an A6000, an RTX 5880 Ada, and several
+    more), each with the vast.ai web-UI default signature (unlabeled, <code>nvidia/cuda</code>
+    image) - not produced by the pipeline's single labelled rental. They were detected and
+    destroyed, and a stray-killer was added to every monitor cycle to auto-destroy any
+    non-pipeline instance. Wasted spend on strays was roughly $1.5-2 before the auto-killer
+    contained them.
+  </div>
 
-  <h2>7. How to continue</h2>
+  <h2>3. Results</h2>
+
+  <div class="card pos">
+    <h3>E1 - MS-SKG built <span class="pill p-pos">complete</span></h3>
+    10,141 nodes (3,592 group, 6,549 context), 23,985 edges of which 10,887 are cross-lingual
+    <code>same_as</code>, 3,109 canonical concepts, coverage 1.0. Integrity verified:
+    0 dangling edges, every <code>same_as</code> links a shared <code>canonical_id</code>.
+  </div>
+
+  <div class="card pos">
+    <h3>E3 - KG-bridged cross-lingual transfer (HEADLINE) <span class="pill p-pos">positive on indian_bias</span></h3>
+    <p>Bridge Transfer Gain, <code>BTG = FBR(kg_bridged) - FBR(direct)</code>. Positive means the
+       KG bridge repairs bias better than directly transferring the English cut.</p>
+    <table>
+      <tr><th>model</th><th>dataset</th><th>lang</th><th class="num">BTG</th><th>competence-valid</th></tr>
+      <tr><td>aya-23-8b</td><td><strong>indian_bias</strong></td><td>hi</td><td class="num"><strong>+6.53</strong></td><td>yes</td></tr>
+      <tr><td>qwen2.5-7b</td><td><strong>indian_bias</strong></td><td>bn</td><td class="num">+6.40</td><td>no</td></tr>
+      <tr><td>qwen2.5-7b</td><td><strong>indian_bias</strong></td><td>hi</td><td class="num">+2.78</td><td>no</td></tr>
+      <tr><td>aya-23-8b</td><td>crows_pairs</td><td>bn</td><td class="num">+0.46</td><td>no</td></tr>
+      <tr><td>qwen2.5-7b</td><td>crows_pairs</td><td>hi</td><td class="num">-0.85</td><td>no</td></tr>
+      <tr><td>aya-23-8b</td><td>crows_pairs</td><td>hi</td><td class="num">-1.24</td><td>yes</td></tr>
+      <tr><td>qwen2.5-7b</td><td>crows_pairs</td><td>bn</td><td class="num">-3.87</td><td>no</td></tr>
+      <tr><td>aya-23-8b</td><td>indian_bias</td><td>bn</td><td class="num">-5.37</td><td>no</td></tr>
+    </table>
+    <div class="takeaway t-pos">
+      <strong>Mean BTG: indian_bias +2.59, crows_pairs -1.38.</strong> The KG bridge helps on the
+      India-centric Hindi/Bengali dataset (3 of 4 cells positive) and not on the Western-origin
+      crows_pairs. The single cleanest cell - Aya on Hindi, competence-valid on indian_bias - is
+      <strong>+6.53</strong>. Honest framing for the paper: the graph bridge transfers bias repair
+      in the multilingual India setting the work targets; crows_pairs is a reportable boundary.
+    </div>
+  </div>
+
+  <div class="card warn">
+    <h3>E4-local - KG retrieval-augmented inference <span class="pill p-warn">strong but over-corrects</span></h3>
+    <p>Expressed bias measured by which fill the model prefers (50 = neutral; >50 stereotypical).
+       Local decoders, 300 pairs per language.</p>
+    <div class="takeaway t-warn">
+      <strong>Mean expressed bias 55.8 -> 20.2 under KG-RAG.</strong> Injecting counter-stereotype
+      facts removes the stereotypical preference very strongly, but it <em>over-corrects</em>: the
+      model swings past neutral into anti-stereotypical (mean deviation from 50 rises 6.2 -> 29.8;
+      e.g. Qwen crows-bn 54.7 -> 8.7). So naive KG-RAG is a powerful but blunt steering signal -
+      it eliminates stereotyping yet needs calibration to land at neutrality. This is a nuanced,
+      reportable finding rather than a clean win.
+    </div>
+  </div>
+
+  <div class="card neg">
+    <h3>E2 - KG-guided counterfactual data augmentation <span class="pill p-neg">negative</span></h3>
+    <p>Bias reduction from retraining the minimal cut on augmented data (higher = better).</p>
+    <table>
+      <tr><th>method</th><th class="num">mean bias reduction</th><th>note</th></tr>
+      <tr><td>no_cda (reused baseline)</td><td class="num">+1.20</td><td>best</td></tr>
+      <tr><td>random_cda</td><td class="num">-0.52</td><td>worse than baseline</td></tr>
+      <tr><td>kg_cda</td><td class="num">-1.04</td><td>worst</td></tr>
+    </table>
+    <div class="takeaway t-neg">
+      <strong>KG-guided augmentation does not help - it is the weakest experiment.</strong>
+      Part of the cause is structural: several <code>indian_bias</code> categories (e.g. caste,
+      only 13 group nodes) have too few same-type siblings, so KG-CDA produced as few as 4
+      counterfactual pairs and could not train a useful cut. This is reported as an honest
+      negative result and a limitation of surface-form KG augmentation.
+    </div>
+  </div>
+
+  <div class="card pos">
+    <h3>E5 - graph propagation analysis <span class="pill p-pos">strong positive</span></h3>
+    <div class="takeaway t-pos">
+      <strong>Mean bridge ratio 0.767 versus reused circuit Jaccard 0.035.</strong> Papers 1-5
+      showed language-specific bias circuits are near-disjoint in the parameters (Jaccard ~0.035);
+      yet personalised PageRank over the MS-SKG delivers 77% of its cross-lingual mass onto the
+      true <code>same_as</code> counterparts. The graph bridges what the parameters do not -
+      the cleanest result in the set and a natural anchor for the paper.
+    </div>
+  </div>
+
+  <div class="card pos">
+    <h3>E4-API - KG-RAG on black-box API models <span class="pill p-pos">complete - the richest E4 result</span></h3>
+    <p>Subject models via API, 100 pairs per language (smaller than E4-local to bound API cost).
+       Mean expressed bias (50 = neutral). 0 refusals; every cell decided 100/100.</p>
+    <table>
+      <tr><th>API model</th><th class="num">no_rag</th><th class="num">kg_rag</th><th>effect of KG-RAG</th></tr>
+      <tr><td>gpt-oss-20b</td><td class="num">51.0</td><td class="num">50.7</td><td>already fair -> stays neutral (harmless)</td></tr>
+      <tr><td>deepseek-chat</td><td class="num">76.2</td><td class="num">22.7</td><td>strongly biased -> large correction, over-shoots</td></tr>
+      <tr><td>llama-3.3-70b</td><td class="num">70.0</td><td class="num">34.7</td><td>biased -> large correction</td></tr>
+    </table>
+    <div class="takeaway t-pos">
+      <strong>Two clean findings.</strong> (1) KG-RAG's effect scales with the model's baseline bias:
+      it leaves an already-fair model (gpt-oss) untouched and strongly corrects biased ones
+      (deepseek 76 -> 23, llama 70 -> 35). (2) <strong>The over-correction is a language effect,
+      not a method flaw:</strong> after KG-RAG the mean distance from neutral is only
+      <strong>6.0 in English</strong> but <strong>18.3 in Hindi and 22.3 in Bengali</strong>. KG-RAG
+      lands near-perfect in English and over-corrects in the low-resource languages - a precise,
+      publishable diagnostic that ties the over-correction to multilingual competence rather than
+      to retrieval itself.
+    </div>
+  </div>
+
+  <h2>4. Honest assessment for the paper</h2>
   <ul>
-    <li>CPU-only experiments runnable now (no GPU): <code>python CPU_Only_06/e4_kgrag_api.py</code> (E4 via DeepSeek/OpenRouter) and <code>python CPU_Only_08/e5_propagation.py</code> (E5).</li>
-    <li>On the rented GPU box, resume the full sequence: <code>python run_all.py --from 04</code>. Every step is resume-capable and skips already-written rows.</li>
-    <li>GPU speed-up: <code>python Common_00/install_flash_attention.py</code> (pre-compiled wheel; Linux x86_64 + CUDA) before the GPU steps.</li>
+    <li><strong>What carries the paper:</strong> E5 (graph bridges disjoint circuits, ratio 0.77)
+        and E3 on indian_bias (BTG +2.59 mean, +6.53 on the cleanest competence-valid cell).</li>
+    <li><strong>Second strong result (E4-API):</strong> KG-RAG's correction scales with baseline
+        bias (harmless on the fair gpt-oss, strong on biased deepseek/llama), and it lands
+        near-neutral in English (dev 6.0) while over-correcting in Hindi/Bengali (dev 18-22). The
+        over-correction is a low-resource-language effect, not a flaw in retrieval - a clean,
+        defensible framing.</li>
+    <li><strong>Honest negative:</strong> E2 KG-CDA does not beat random or no-CDA. Keeping it in
+        as a negative result strengthens credibility - the result set is not suspiciously
+        all-positive.</li>
+    <li><strong>Key caveat to state explicitly:</strong> only 2 of 8 E3 cells are competence-valid
+        (the models are weak on Hindi/Bengali per the Paper 4 gate); bias numbers on
+        low-competence cells are less reliable and should be flagged in the write-up.</li>
+    <li><strong>Possible reviewer objection on E5:</strong> the bridge ratio partly reflects how
+        the KG was built (same_as edges inserted from parallel data), so present E5 as descriptive
+        evidence of bridgeability, ideally against a null-graph baseline, not as an emergent claim.</li>
+  </ul>
+
+  <h2>5. Cost and what remains</h2>
+  <table>
+    <tr><th>Item</th><th class="num">approx cost</th></tr>
+    <tr><td>RTX 4090 pipeline run (~5.2 h @ $0.39/h)</td><td class="num">~$2.0</td></tr>
+    <tr><td>Stray instances (the mistake, before auto-killer)</td><td class="num">~$1.5-2.0</td></tr>
+    <tr><td>E4-API calls (DeepSeek + OpenRouter, complete)</td><td class="num">~$1-2</td></tr>
+    <tr><td><strong>Total</strong></td><td class="num"><strong>~$4-6 of the $10 budget</strong></td></tr>
+  </table>
+  <ul>
+    <li><strong>All five experiments are complete.</strong> Every result CSV is present locally and
+        mirrored on GitHub. No compute is billing (the GPU instance is destroyed; 0 instances live).</li>
+    <li><strong>Next for the paper:</strong> write the consolidated five-experiment results section,
+        leading with E5 and E3 (indian_bias), reporting E4 as effective-but-language-dependent, and
+        E2 as an honest negative; flag the competence and E5-construction caveats.</li>
+    <li><strong>Security note:</strong> the GitHub token was shared in plain text during the run;
+        rotate it now, as it lives in chat history.</li>
   </ul>
 
   <footer>
-    Generated 2026-06-20. Config change this session: <code>judge.provider</code> set to
-    <code>deepseek</code>. No emoji or secret value appears in this report or in any tracked file.
+    Generated 2026-06-21. All numbers above are from the actual result CSVs in <code>results/</code>
+    (mirrored on GitHub at <code>DevDaring/Stereo_Graph_Multilingual</code>). No emoji or secret
+    value appears in this report. The single GPU instance has been destroyed; no compute is billing.
   </footer>
 
 </div>

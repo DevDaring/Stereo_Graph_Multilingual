@@ -52,7 +52,8 @@ def run(config, resume=True):
     graph = load_graph(config)
     p3 = reuse.llm_clti(config)
     done = done_keys(OUT, ["subject_model", "dataset", "language", "condition"]) if resume else set()
-    max_pairs = config["e4_kgrag"]["max_pairs_per_lang"]
+    max_pairs = config["e4_kgrag"].get("max_pairs_per_lang_api",
+                                       config["e4_kgrag"]["max_pairs_per_lang"])
     langs = config["data"]["crows_pairs"]["languages"]
 
     for short in config["api_predict_only"]:
