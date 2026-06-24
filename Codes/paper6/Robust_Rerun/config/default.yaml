@@ -1,0 +1,135 @@
+# ===========================================================================
+# Robust_Rerun - leakage-free re-run of the Paper 6 graph contribution.
+# Non-secret configuration ONLY. Every API key loads from the repo-root .env
+# by NAME; no key value ever appears here or in any tracked file.
+# All paths are relative to Codes/paper6/ (Common_00.resolve anchors there).
+# ===========================================================================
+
+experiment:
+  name: paper6_robust_rerun
+  seeds: [42]
+
+# ---------------------------------------------------------------------------
+# Paths. Reuses Papers 1-5 raw data and the Paper 5 cut compute; writes all new
+# outputs under Robust_Rerun/results so nothing overwrites the old pipeline.
+# ---------------------------------------------------------------------------
+paths:
+  data_raw: ../paper1/data/raw
+  paper5_results: ../paper5/results
+  paper5_src: ../paper5/src
+  results: Robust_Rerun/results
+  kg_dir: Robust_Rerun/results/kg
+  split_file: Robust_Rerun/results/concept_split.json
+
+# ---------------------------------------------------------------------------
+# Datasets (identical parallel bias CSVs as Papers 1-5).
+# ---------------------------------------------------------------------------
+data:
+  crows_pairs:
+    file: multicrows_pairs.csv
+    languages: [en, hi, bn]
+  indian_bias:
+    file: indian_multilingual_bias.csv
+    languages: [en, hi, bn]
+  hellaswag:
+    file: hellaswag_multilingual_val.jsonl
+    languages: [en, hi, bn]
+    competence_subset_per_language: 500
+
+# ---------------------------------------------------------------------------
+# Models (identical to Papers 1-5).
+# ---------------------------------------------------------------------------
+white_box:
+  encoders:
+    - {hf_id: xlm-roberta-base,             short: xlm-r-base}
+    - {hf_id: google/muril-base-cased,      short: muril-base}
+    - {hf_id: bert-base-multilingual-cased, short: mbert}
+  llms:
+    - {hf_id: Qwen/Qwen2.5-7B-Instruct,     short: qwen2.5-7b}
+    - {hf_id: CohereForAI/aya-23-8B,        short: aya-23-8b}
+
+# Black-box decoders evaluated for expressed bias (E4, API).
+api_predict_only: [deepseek-chat, llama-3.3-70b, gpt-oss-20b]
+
+quantization:                # NF4 4-bit, identical to Papers 1/3/5
+  load_in_4bit: true
+  bnb_4bit_quant_type: nf4
+  bnb_4bit_compute_dtype: bfloat16
+  bnb_4bit_use_double_quant: true
+
+backbone:
+  use_flash_attention: true  # pre-compiled wheel; install_flash_attention.py
+  max_length: 128
+  max_new_tokens: 24
+  encoder_dtype: fp16
+
+# ---------------------------------------------------------------------------
+# Judge / answer-extraction providers.
+# PRIMARY  : LinkAPI gemini-2.5-pro (single key Link_Gemini_Cheap_API_Key).
+# SECONDARY: DeepSeek deepseek-chat (2 keys, round-robin).
+# TERTIARY : Mistral Small (2 keys, round-robin).
+# Round-robin rotates keys WITHIN the active provider only. There is NO
+# automatic cross-provider fallback: judge.provider fixes the active provider.
+# base_url and model id live here (non-secret); only the keys live in .env.
+# ---------------------------------------------------------------------------
+judge:
+  provider: linkapi          # one of: linkapi | deepseek | mistral
+  temperature: 0.0
+  max_tokens: 512            # gemini-2.5-pro reasons; leave room for a visible answer
+  timeout_s: 90
+  providers:
+    linkapi:
+      base_url: https://api.linkapi.ai/v1
+      model: gemini-2.5-pro
+      key_env_vars: [Link_Gemini_Cheap_API_Key]
+    deepseek:
+      base_url_env: DEEPSEEK_API_BASE_URL
+      base_url_default: https://api.deepseek.com/v1
+      model: deepseek-chat
+      key_env_vars: [DEEPSEEK_API_KEY_1, DEEPSEEK_API_KEY_2]
+    mistral:
+      base_url_default: https://api.mistral.ai/v1
+      model: mistral-small-latest
+      key_env_vars: [MISTRAL_API_KEY1, MISTRAL_API_KEY2]
+
+# ---------------------------------------------------------------------------
+# Leakage-free protocol.
+# ---------------------------------------------------------------------------
+split:
+  unit: concept              # split by canonical cross-lingual group concept
+  test_fraction: 0.30
+  val_fraction: 0.15         # carved from TRAIN, for retrieval calibration
+  seed: 42
+
+kg:
+  built_from: train_concepts_only   # test concepts are NEVER added to the graph
+  min_edge_weight: 1
+
+# E5 propagation as held-out same_as link prediction (de-circularised).
+e5_propagation:
+  pagerank_alpha: 0.85
+  max_iter: 100
+  heldout_same_as_fraction: 0.50
+  n_null_relabel: 50
+
+# Multi-seed minimal-cut stability (de-noises the 0.035 disjointness claim).
+cut_stability:
+  seeds: [13, 29, 42, 71, 97]
+  steps: 80
+  lr: 0.05
+  lambda_utility: 1.0
+  gamma_sparsity: 0.01
+  mask_init: 3.0
+  max_pairs: 64
+  random_mask_trials: 20     # random masks of matched sparsity, for the null overlap
+
+# Leakage-free retrieval + baselines + calibration.
+rag:
+  max_pairs_per_lang: 300        # local decoders (step 07)
+  max_pairs_per_lang_api: 100    # API subjects (step 08)
+  max_neighbours: 3              # default counter-evidence facts injected
+  conditions: [base, safety_prompt, translate_en, flat_dict, kg_rag_monolingual, kg_rag]
+
+calibrate:
+  n_facts_grid: [1, 2, 3, 4]
+  target_deviation: 0.0          # land at 50 (neutral), not over-corrected
