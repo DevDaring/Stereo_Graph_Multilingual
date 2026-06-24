@@ -1,0 +1,45 @@
+{
+  "datasets": [
+    {
+      "dataset": "crows_pairs",
+      "sha256": "46fc39eeb00c5fdd757e70be32a0aa5875247d4bd183bf2c937e3fce59369dd9",
+      "n_rows": 4266,
+      "n_alignment_units": 1422,
+      "duplicate_rows": 0,
+      "duplicate_unique_keys": 0,
+      "duplicate_key_examples": {},
+      "corruption": {
+        "missing_mask_slot": 1,
+        "missing_index": 0,
+        "empty_target": 0,
+        "empty_sentence": 0,
+        "unexpected_language": 0
+      },
+      "units_missing_a_language": 0,
+      "missing_parallel_examples": [],
+      "hard_corruption_count": 0,
+      "status": "ok"
+    },
+    {
+      "dataset": "indian_bias",
+      "sha256": "d9a2be763a4508cc4e1e9dc727d37d56f09b49ddfb73a82fd0d06350ca2d36a9",
+      "n_rows": 2283,
+      "n_alignment_units": 761,
+      "duplicate_rows": 0,
+      "duplicate_unique_keys": 0,
+      "duplicate_key_examples": {},
+      "corruption": {
+        "missing_index": 0,
+        "empty_target": 0,
+        "empty_sentence": 0,
+        "unexpected_language": 0
+      },
+      "units_missing_a_language": 0,
+      "missing_parallel_examples": [],
+      "hard_corruption_count": 0,
+      "status": "ok"
+    }
+  ],
+  "total_hard_corruption": 0,
+  "status": "ok"
+}

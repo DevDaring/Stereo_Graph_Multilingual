@@ -1,0 +1,125 @@
+{
+  "providers": [
+    {
+      "provider": "linkapi",
+      "model": "gemini-2.5-pro",
+      "base_url": "https://api.linkapi.ai/v1",
+      "n_keys_found": 1,
+      "key_env_vars": [
+        "Link_Gemini_Cheap_API_Key"
+      ],
+      "keys": [
+        {
+          "key_index": 1,
+          "status": "ok",
+          "detail": "ok"
+        }
+      ],
+      "any_ok": true
+    },
+    {
+      "provider": "deepseek",
+      "model": "deepseek-chat",
+      "base_url": "https://api.deepseek.com/v1",
+      "n_keys_found": 2,
+      "key_env_vars": [
+        "DEEPSEEK_API_KEY_1",
+        "DEEPSEEK_API_KEY_2"
+      ],
+      "keys": [
+        {
+          "key_index": 1,
+          "status": "ok",
+          "detail": "ok"
+        },
+        {
+          "key_index": 2,
+          "status": "ok",
+          "detail": "ok"
+        }
+      ],
+      "any_ok": true
+    },
+    {
+      "provider": "mistral",
+      "model": "mistral-small-latest",
+      "base_url": "https://api.mistral.ai/v1",
+      "n_keys_found": 2,
+      "key_env_vars": [
+        "MISTRAL_API_KEY1",
+        "MISTRAL_API_KEY2"
+      ],
+      "keys": [
+        {
+          "key_index": 1,
+          "status": "ok",
+          "detail": "ok"
+        },
+        {
+          "key_index": 2,
+          "status": "ok",
+          "detail": "ok"
+        }
+      ],
+      "any_ok": true
+    }
+  ],
+  "active_judge": "linkapi",
+  "local_models": [
+    {
+      "group": "encoders",
+      "hf_id": "xlm-roberta-base",
+      "short": "xlm-r-base"
+    },
+    {
+      "group": "encoders",
+      "hf_id": "google/muril-base-cased",
+      "short": "muril-base"
+    },
+    {
+      "group": "encoders",
+      "hf_id": "bert-base-multilingual-cased",
+      "short": "mbert"
+    },
+    {
+      "group": "llms",
+      "hf_id": "Qwen/Qwen2.5-7B-Instruct",
+      "short": "qwen2.5-7b"
+    },
+    {
+      "group": "llms",
+      "hf_id": "CohereForAI/aya-23-8B",
+      "short": "aya-23-8b"
+    }
+  ],
+  "api_subject_models": [
+    {
+      "short": "deepseek-chat",
+      "configured": true,
+      "model": "deepseek-chat",
+      "status": "ok",
+      "detail": "ok"
+    },
+    {
+      "short": "llama-3.3-70b",
+      "configured": true,
+      "model": "meta-llama/llama-3.3-70b-instruct",
+      "status": "ok",
+      "detail": "ok"
+    },
+    {
+      "short": "gpt-oss-20b",
+      "configured": true,
+      "model": "openai/gpt-oss-20b",
+      "status": "ok",
+      "detail": "ok"
+    }
+  ],
+  "huggingface_token_present": true,
+  "flash_attention": {
+    "torch": "2.5.1+cu121",
+    "cuda": "12.1",
+    "cuda_available": true,
+    "flash_attn": "2.7.4.post1"
+  }
+}

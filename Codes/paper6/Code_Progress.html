@@ -49,7 +49,7 @@
      <em>Information Sciences</em> special issue (Graph-based solutions for AI).</p>
   <div class="meta">
     <span><strong>Report date:</strong> 2026-06-24</span>
-    <span><strong>Stage:</strong> CPU outputs final (local, leakage gate passed); GPU run pending - pod SSH unreachable (provider-side banner-exchange timeout)</span>
+    <span><strong>Stage:</strong> GPU run LIVE on Vast.ai RTX 3090 (24 GB, flash-attn 2.7.4.post1); pushing results every 15 min</span>
     <span><strong>Primary judge:</strong> LinkAPI gemini-2.5-pro (no auto-fallback)</span>
   </div>
 
@@ -84,6 +84,15 @@
     node in the graph is a TRAIN concept (4,634 checked), the KG is
     <code>built_from = train_concepts_only</code> with 303 test concepts held out, and 0 of
     4,572 retrieved facts equalled a query item's own answer on held-out TEST items.
+  </div>
+
+  <div class="card pos">
+    <strong>GPU run live.</strong> Vast.ai RTX 3090 (24 GB, SM86), pre-compiled
+    flash-attention 2.7.4.post1. Dry run passed on the VM (LinkAPI gemini-2.5-pro 1/1,
+    DeepSeek 2/2, Mistral 2/2, all three API subjects OK). Execution order is GPU-first
+    (05 then 08) so the costly results are secured before the API steps (07, 09); the analysis
+    (10) runs last. Results + logs push to Stereo_Graph_Multilingual every 15 minutes; logs are
+    verified key-free.
   </div>
 
   <h2>2. Pipeline status</h2>

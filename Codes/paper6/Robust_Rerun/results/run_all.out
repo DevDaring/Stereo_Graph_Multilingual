@@ -1,1 +1,43 @@
 === START Wed Jun 24 12:49:58 UTC 2026 ===
+=== STEP 01  data integrity ===
+  crows_pairs    rows= 4266 units= 1422 dup_rows=0 dup_keys=0 missing_parallel=0 -> ok
+  indian_bias    rows= 2283 units=  761 dup_rows=0 dup_keys=0 missing_parallel=0 -> ok
+  report: /root/repo/Codes/paper6/Robust_Rerun/results/integrity_report.json
+  clean.
+=== STEP 02  concept split ===
+  unit=concept seed=42 test=0.3 val=0.15
+  concepts: 926  counts: {'train': 487, 'val': 136, 'test': 303}
+  written: /root/repo/Codes/paper6/Robust_Rerun/results/concept_split.json
+=== STEP 03  build MS-SKG (train concepts only) ===
+  built_from: train_concepts_only
+  n_nodes: 4634
+  n_group_nodes: 1280
+  n_context_nodes: 3354
+  n_edges: 11725
+  n_same_as_edges: 5017
+  n_canonical_concepts: 1416
+  n_train_concepts: 487
+  n_val_concepts: 136
+  n_test_concepts: 303
+  items_kept_train: 3354
+  items_skipped_heldout: 3195
+  ok: KG built_from=train_concepts_only, 303 test concepts held out, 3195 items skipped
+  ok: every group node in the graph is a TRAIN concept (4634 nodes checked)
+  ok: 0 leaked answers across 4572 retrieved facts on held-out TEST items
+ALL 3 LEAKAGE CHECKS PASSED
+=== STEP 04  dry run (providers / keys / model ids) ===
+  linkapi   model=gemini-2.5-pro         keys_ok=1/1
+  deepseek  model=deepseek-chat          keys_ok=2/2
+  mistral   model=mistral-small-latest   keys_ok=2/2
+  API subject models:
+      deepseek-chat    model=deepseek-chat                         -> ok
+      llama-3.3-70b    model=meta-llama/llama-3.3-70b-instruct     -> ok
+      gpt-oss-20b      model=openai/gpt-oss-20b                    -> ok
+  local models: 5 | HF token present: True | flash_attn: 2.7.4.post1
+  report: /root/repo/Codes/paper6/Robust_Rerun/results/dry_run_report.json
+  active judge provider OK.
+=== [GPU] step 05 cut_stability Wed Jun 24 12:50:09 UTC 2026 ===
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+=== STEP 05  multi-seed cut stability ===
+Fetching 4 files:   0%|          | 0/4 [00:00<?, ?it/s]Fetching 4 files:  25%|██▌       | 1/4 [00:46<02:19, 46.46s/it]Fetching 4 files: 100%|██████████| 4/4 [00:46<00:00, 11.61s/it]
+Loading weights:   0%|          | 0/339 [00:00<?, ?it/s]Loading weights:   0%|          | 1/339 [00:00<01:30,  3.73it/s]Loading weights:   1%|          | 2/339 [00:00<01:35,  3.51it/s]Loading weights:   2%|▏         | 6/339 [00:00<00:29, 11.31it/s]Loading weights:   8%|▊         | 28/339 [00:00<00:05, 60.20it/s]Loading weights:  12%|█▏        | 42/339 [00:00<00:03, 77.55it/s]Loading weights:  19%|█▉        | 65/339 [00:01<00:02, 115.05it/s]Loading weights:  26%|██▌       | 88/339 [00:01<00:01, 143.85it/s]Loading weights:  31%|███▏      | 106/339 [00:01<00:01, 153.53it/s]Loading weights:  37%|███▋      | 124/339 [00:01<00:01, 150.16it/s]Loading weights:  42%|████▏     | 141/339 [00:01<00:01, 105.97it/s]Loading weights:  47%|████▋     | 160/339 [00:01<00:01, 114.70it/s]Loading weights:  51%|█████▏    | 174/339 [00:01<00:01, 97.68it/s] Loading weights:  55%|█████▍    | 186/339 [00:02<00:01, 83.03it/s]Loading weights:  58%|█████▊    | 197/339 [00:02<00:01, 87.58it/s]Loading weights:  61%|██████▏   | 208/339 [00:02<00:01, 90.60it/s]Loading weights:  65%|██████▍   | 220/339 [00:02<00:01, 92.11it/s]Loading weights:  68%|██████▊   | 230/339 [00:02<00:01, 91.62it/s]Loading weights:  72%|███████▏  | 244/339 [00:02<00:00, 101.87it/s]Loading weights:  77%|███████▋  | 262/339 [00:02<00:00, 121.00it/s]Loading weights:  83%|████████▎ | 281/339 [00:02<00:00, 124.39it/s]Loading weights:  87%|████████▋ | 294/339 [00:03<00:00, 103.02it/s]Loading weights:  92%|█████████▏| 312/339 [00:03<00:00, 119.68it/s]Loading weights:  97%|█████████▋| 330/339 [00:03<00:00, 129.97it/s]Loading weights: 100%|██████████| 339/339 [00:03<00:00, 100.09it/s]

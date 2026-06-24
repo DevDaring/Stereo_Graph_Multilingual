@@ -1,0 +1,14 @@
+{
+  "built_from": "train_concepts_only",
+  "n_nodes": 4634,
+  "n_group_nodes": 1280,
+  "n_context_nodes": 3354,
+  "n_edges": 11725,
+  "n_same_as_edges": 5017,
+  "n_canonical_concepts": 1416,
+  "n_train_concepts": 487,
+  "n_val_concepts": 136,
+  "n_test_concepts": 303,
+  "items_kept_train": 3354,
+  "items_skipped_heldout": 3195
+}
