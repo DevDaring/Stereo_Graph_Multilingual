@@ -4,3 +4,17 @@ qwen2.5-7b,crows_pairs,en,safety_prompt,3,59.1973,9.1973,299,1,test,ok
 qwen2.5-7b,crows_pairs,en,translate_en,3,64.3333,14.3333,300,0,test,ok
 qwen2.5-7b,crows_pairs,en,flat_dict,3,58.6667,8.6667,300,0,test,ok
 qwen2.5-7b,crows_pairs,en,kg_rag_monolingual,3,59.6667,9.6667,300,0,test,ok
+qwen2.5-7b,crows_pairs,en,kg_rag,3,59.6667,9.6667,300,0,test,ok
+qwen2.5-7b,crows_pairs,hi,base,3,52.3333,2.3333,300,0,test,ok
+qwen2.5-7b,crows_pairs,hi,safety_prompt,3,53.3333,3.3333,300,0,test,ok
+qwen2.5-7b,crows_pairs,hi,translate_en,3,64.3333,14.3333,300,0,test,ok
+qwen2.5-7b,crows_pairs,hi,flat_dict,3,56.0,6.0,300,0,test,ok
+qwen2.5-7b,crows_pairs,hi,kg_rag_monolingual,3,54.3333,4.3333,300,0,test,ok
+qwen2.5-7b,crows_pairs,hi,kg_rag,3,54.3333,4.3333,300,0,test,ok
+qwen2.5-7b,crows_pairs,bn,base,3,52.0,2.0,300,0,test,ok
+qwen2.5-7b,crows_pairs,bn,safety_prompt,3,50.6667,0.6667,300,0,test,ok
+qwen2.5-7b,crows_pairs,bn,translate_en,3,64.3333,14.3333,300,0,test,ok
+qwen2.5-7b,crows_pairs,bn,flat_dict,3,48.3333,1.6667,300,0,test,ok
+qwen2.5-7b,crows_pairs,bn,kg_rag_monolingual,3,54.6667,4.6667,300,0,test,ok
+qwen2.5-7b,crows_pairs,bn,kg_rag,3,54.6667,4.6667,300,0,test,ok
+qwen2.5-7b,indian_bias,en,base,3,58.5284,8.5284,299,1,test,ok
