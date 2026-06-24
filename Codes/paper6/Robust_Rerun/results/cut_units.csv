@@ -1,0 +1,2 @@
+subject_model,dataset,language,seed,n_units,n_total,band,units,status
+qwen2.5-7b,crows_pairs,en,13,0,10752,7|8|9,,ok
