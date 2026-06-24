@@ -113,20 +113,27 @@ e5_propagation:
   n_null_relabel: 50
 
 # Multi-seed minimal-cut stability (de-noises the 0.035 disjointness claim).
+# Right-sized for a single rented GPU: 3 seeds is enough for a stability/variance
+# check. KEEP steps at 80 (the validated value) so the L0 sparsity actually
+# converges to a non-empty cut; speed comes only from fewer pairs/seeds. Uniform
+# across all cells for comparability.
 cut_stability:
-  seeds: [13, 29, 42, 71, 97]
+  seeds: [13, 29, 42]
+  # EXACT paper5 minimal_cut hyperparameters - these produce the validated
+  # non-empty cuts (~474 units) and the 0.035 Jaccard. The old gamma 0.01 /
+  # mask_init 3.0 made the mask cut NOTHING (sparsity loss dwarfed the bias loss).
   steps: 80
-  lr: 0.05
-  lambda_utility: 1.0
-  gamma_sparsity: 0.01
-  mask_init: 3.0
-  max_pairs: 64
+  lr: 0.1
+  lambda_utility: 0.5
+  gamma_sparsity: 0.0003
+  mask_init: 1.0
+  max_pairs: 32              # 32 (vs paper5's 64) only to keep 36 cuts tractable
   random_mask_trials: 20     # random masks of matched sparsity, for the null overlap
 
 # Leakage-free retrieval + baselines + calibration.
 rag:
-  max_pairs_per_lang: 300        # local decoders (step 07)
-  max_pairs_per_lang_api: 100    # API subjects (step 08)
+  max_pairs_per_lang: 300        # local decoders (GPU, step 08; cheap generations)
+  max_pairs_per_lang_api: 60     # API subjects (steps 07/09; keeps API wall-time bounded)
   max_neighbours: 3              # default counter-evidence facts injected
   conditions: [base, safety_prompt, translate_en, flat_dict, kg_rag_monolingual, kg_rag]
 
