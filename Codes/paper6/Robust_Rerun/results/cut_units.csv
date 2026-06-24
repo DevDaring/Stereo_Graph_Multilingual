@@ -2,3 +2,4 @@ subject_model,dataset,language,seed,n_units,n_total,band,units,status
 qwen2.5-7b,crows_pairs,en,13,1,10752,7|8|9,9:2024,ok
 qwen2.5-7b,crows_pairs,en,29,1,10752,7|8|9,9:2024,ok
 qwen2.5-7b,crows_pairs,en,42,1,10752,7|8|9,9:2024,ok
+qwen2.5-7b,crows_pairs,en,71,1,10752,7|8|9,9:2024,ok
