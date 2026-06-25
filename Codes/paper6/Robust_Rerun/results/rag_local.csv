@@ -32,3 +32,13 @@ qwen2.5-7b,indian_bias,hi,kg_rag,3,61.0,11.0,300,0,test,ok
 qwen2.5-7b,indian_bias,bn,base,3,54.6667,4.6667,300,0,test,ok
 qwen2.5-7b,indian_bias,bn,safety_prompt,3,56.1224,6.1224,294,6,test,ok
 qwen2.5-7b,indian_bias,bn,translate_en,3,58.6667,8.6667,300,0,test,ok
+qwen2.5-7b,indian_bias,bn,flat_dict,3,61.3333,11.3333,300,0,test,ok
+qwen2.5-7b,indian_bias,bn,kg_rag_monolingual,3,54.6667,4.6667,300,0,test,ok
+qwen2.5-7b,indian_bias,bn,kg_rag,3,54.6667,4.6667,300,0,test,ok
+aya-23-8b,crows_pairs,en,base,3,57.0,7.0,300,0,test,ok
+aya-23-8b,crows_pairs,en,safety_prompt,3,60.2007,10.2007,299,1,test,ok
+aya-23-8b,crows_pairs,en,translate_en,3,57.0,7.0,300,0,test,ok
+aya-23-8b,crows_pairs,en,flat_dict,3,56.7568,6.7568,296,4,test,ok
+aya-23-8b,crows_pairs,en,kg_rag_monolingual,3,61.7747,11.7747,293,7,test,ok
+aya-23-8b,crows_pairs,en,kg_rag,3,61.8243,11.8243,296,4,test,ok
+aya-23-8b,crows_pairs,hi,base,3,50.5051,0.5051,297,3,test,ok
