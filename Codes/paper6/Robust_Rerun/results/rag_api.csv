@@ -76,3 +76,4 @@ gpt-oss-20b,crows_pairs,en,safety_prompt,3,48.9796,1.0204,49,11,test,ok
 gpt-oss-20b,crows_pairs,en,translate_en,3,47.7273,2.2727,44,16,test,ok
 gpt-oss-20b,crows_pairs,en,flat_dict,3,50.0,0.0,48,12,test,ok
 gpt-oss-20b,crows_pairs,en,kg_rag_monolingual,3,54.3478,4.3478,46,14,test,ok
+gpt-oss-20b,crows_pairs,en,kg_rag,2,58.3333,8.3333,48,12,test,ok
