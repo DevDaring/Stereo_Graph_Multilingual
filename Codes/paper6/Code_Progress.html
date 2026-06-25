@@ -48,9 +48,9 @@
      study. Pipeline at <code>Codes/paper6/Robust_Rerun/</code>. Target: Elsevier
      <em>Information Sciences</em> special issue (Graph-based solutions for AI).</p>
   <div class="meta">
-    <span><strong>Report date:</strong> 2026-06-24</span>
-    <span><strong>Stage:</strong> GPU run LIVE on Vast.ai RTX 3090 (24 GB, flash-attn 2.7.4.post1); pushing results every 15 min</span>
-    <span><strong>Primary judge:</strong> LinkAPI gemini-2.5-pro (no auto-fallback)</span>
+    <span><strong>Report date:</strong> 2026-06-25</span>
+    <span><strong>Stage:</strong> steps 01-08 complete; 07 calibrate done; 09 rag_api finishing (81/108); 10 analysis imminent</span>
+    <span><strong>Answer extractor:</strong> DeepSeek (switched from LinkAPI gemini-2.5-pro to speed up gpt-oss-20b parsing)</span>
   </div>
 
   <div class="card warn">
@@ -103,14 +103,55 @@
       <tr><td>02 split</td><td>cpu</td><td>concept train/val/test split</td><td><span class="pill p-pos">validated locally</span></td></tr>
       <tr><td>03 build_kg</td><td>cpu</td><td>MS-SKG from TRAIN concepts only</td><td><span class="pill p-pos">validated locally</span></td></tr>
       <tr><td>04 dry_run</td><td>api</td><td>test every key + subject model id + flash-attn</td><td><span class="pill p-pos">passed (all keys/ids OK)</span></td></tr>
-      <tr><td>05 cut_stability</td><td>gpu</td><td>5-seed minimal cut for the disjointness null</td><td><span class="pill p-warn">run on GPU VM</span></td></tr>
-      <tr><td>06 propagation</td><td>cpu</td><td>held-out same_as link prediction vs null</td><td><span class="pill p-pos">validated locally</span></td></tr>
-      <tr><td>07 calibrate</td><td>api</td><td>pick retrieval n_facts on VAL concepts</td><td><span class="pill p-warn">run on VM/API</span></td></tr>
-      <tr><td>08 rag_local</td><td>gpu</td><td>leakage-free RAG + baselines, local decoders</td><td><span class="pill p-warn">run on GPU VM</span></td></tr>
-      <tr><td>09 rag_api</td><td>api</td><td>leakage-free RAG + baselines, black-box subjects</td><td><span class="pill p-warn">run on VM/API</span></td></tr>
-      <tr><td>10 analysis</td><td>cpu</td><td>aggregate -> summary.json + forest_plot.csv</td><td><span class="pill p-pos">validated locally</span></td></tr>
+      <tr><td>05 cut_stability</td><td>gpu</td><td>3-seed minimal cut for the disjointness null</td><td><span class="pill p-pos">done: 36 cuts, all non-empty</span></td></tr>
+      <tr><td>06 propagation</td><td>cpu</td><td>held-out same_as link prediction vs null</td><td><span class="pill p-pos">done: lift 0.80</span></td></tr>
+      <tr><td>07 calibrate</td><td>api</td><td>pick retrieval n_facts on VAL concepts</td><td><span class="pill p-pos">done: n_facts=2</span></td></tr>
+      <tr><td>08 rag_local</td><td>gpu</td><td>leakage-free RAG + baselines, local decoders</td><td><span class="pill p-pos">done: 72/72 cells</span></td></tr>
+      <tr><td>09 rag_api</td><td>api</td><td>leakage-free RAG + baselines, black-box subjects</td><td><span class="pill p-warn">running: 81/108 cells</span></td></tr>
+      <tr><td>10 analysis</td><td>cpu</td><td>aggregate -> summary.json + forest_plot.csv</td><td><span class="pill p-info">imminent</span></td></tr>
     </tbody>
   </table>
+
+  <h2>2b. Results received (live, from the VM run)</h2>
+  <p class="sub">Per-step outputs as pushed to the repo. The aggregated <code>summary.json</code> (step 10)
+     with bootstrap CIs is pending; the raw per-step numbers below are final.</p>
+
+  <h3>Step 05 - multi-seed minimal cut (disjointness)</h3>
+  <p>All <strong>36 cuts non-empty</strong> after the hyperparameter fix (paper5 values:
+     <code>gamma_sparsity 0.0003</code>, <code>mask_init 1.0</code>). Cut sizes by cell, each
+     <strong>identical across its 3 seeds</strong> (so the cut, hence the disjointness, is not
+     optimiser noise): <code>28, 42, 59, 72, 150, 174, 231, 395, 539, 602, 889, 910</code> units
+     (of ~10,752 band units). English/crows = 395, comparable to paper5's 474.</p>
+
+  <h3>Step 06 - held-out propagation (de-circularised)</h3>
+  <p>Holding out half the <code>same_as</code> group links: mean held-out bridge ratio
+     <strong>0.435</strong> vs random-relabel null <strong>0.546</strong> (<strong>lift 0.80</strong>).
+     An honest, non-circular result: the explicit graph edges carry the cross-lingual bridge;
+     once removed, propagation does not recover the counterparts above chance. Replaces the old,
+     by-construction 0.767.</p>
+
+  <h3>Step 07 - retrieval calibration (removes over-correction)</h3>
+  <table>
+    <thead><tr><th>n_facts injected</th><th>1</th><th>2</th><th>3</th><th>4</th></tr></thead>
+    <tbody><tr><td>mean deviation from neutral</td><td>12.58</td><td><strong>10.04</strong></td><td>15.53</td><td>15.67</td></tr></tbody>
+  </table>
+  <p class="sub">Recommended <strong>n_facts = 2</strong> (closest to neutral). More facts over-correct -
+     exactly the behaviour calibration is meant to tame. Used by steps 08-09 for kg_rag.</p>
+
+  <h3>Step 08 - leakage-free RAG, local decoders (72/72 cells, complete)</h3>
+  <p>All conditions reduce bias from base with <strong>no over-correction blow-up</strong> (the old
+     bug). Example, qwen2.5-7b / crows / English (deviation from neutral 50):</p>
+  <table>
+    <thead><tr><th>condition</th><th>base</th><th>safety_prompt</th><th>flat_dict</th><th>kg_rag_mono</th><th>kg_rag</th><th>translate_en</th></tr></thead>
+    <tbody><tr><td>deviation</td><td>14.33</td><td>9.20</td><td>8.67</td><td>9.67</td><td>9.67</td><td>14.33 (=base for EN)</td></tr></tbody>
+  </table>
+
+  <h3>Step 09 - leakage-free RAG, black-box API subjects (running, 81/108)</h3>
+  <p>DeepSeek-V3 and Llama-3.3-70B complete (all 60/60 decided, 0 refusals); gpt-oss-20b finishing.
+     Sensible signal: strongly biased subjects move most, near-neutral ones stay put. Example,
+     DeepSeek-V3 / Indian-bias / English: base bias <strong>83.3</strong> -> safety_prompt
+     <strong>61.7</strong>. gpt-oss-20b sits near neutral (~50) at base, so interventions barely
+     move it - the expected "already-fair model stays fair" control.</p>
 
   <h2>3. Local validation (already run)</h2>
 

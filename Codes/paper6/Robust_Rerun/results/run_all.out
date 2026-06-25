@@ -268,3 +268,115 @@ ModuleNotFoundError: No module named 'scipy'
   recommended n_facts: 2
   written: /root/repo/Codes/paper6/Robust_Rerun/results/calibration.csv and /root/repo/Codes/paper6/Robust_Rerun/results/calibration.json
 === [API] step 09 rag_api     Thu Jun 25 03:46:55 UTC 2026 ===
+=== START Thu Jun 25 07:12:05 UTC 2026 ===
+=== STEP 01  data integrity ===
+  crows_pairs    rows= 4266 units= 1422 dup_rows=0 dup_keys=0 missing_parallel=0 -> ok
+  indian_bias    rows= 2283 units=  761 dup_rows=0 dup_keys=0 missing_parallel=0 -> ok
+  report: /root/repo/Codes/paper6/Robust_Rerun/results/integrity_report.json
+  clean.
+=== STEP 02  concept split ===
+  unit=concept seed=42 test=0.3 val=0.15
+  concepts: 926  counts: {'train': 487, 'val': 136, 'test': 303}
+  written: /root/repo/Codes/paper6/Robust_Rerun/results/concept_split.json
+=== STEP 03  build MS-SKG (train concepts only) ===
+  built_from: train_concepts_only
+  n_nodes: 4634
+  n_group_nodes: 1280
+  n_context_nodes: 3354
+  n_edges: 11725
+  n_same_as_edges: 5017
+  n_canonical_concepts: 1416
+  n_train_concepts: 487
+  n_val_concepts: 136
+  n_test_concepts: 303
+  items_kept_train: 3354
+  items_skipped_heldout: 3195
+  ok: KG built_from=train_concepts_only, 303 test concepts held out, 3195 items skipped
+  ok: every group node in the graph is a TRAIN concept (4634 nodes checked)
+  ok: 0 leaked answers across 4572 retrieved facts on held-out TEST items
+ALL 3 LEAKAGE CHECKS PASSED
+=== STEP 04  dry run (providers / keys / model ids) ===
+  linkapi   model=gemini-2.5-pro         keys_ok=1/1
+  deepseek  model=deepseek-chat          keys_ok=2/2
+  mistral   model=mistral-small-latest   keys_ok=2/2
+  API subject models:
+      deepseek-chat    model=deepseek-chat                         -> ok
+      llama-3.3-70b    model=meta-llama/llama-3.3-70b-instruct     -> ok
+      gpt-oss-20b      model=openai/gpt-oss-20b                    -> ok
+  local models: 5 | HF token present: True | flash_attn: 2.7.4.post1
+  report: /root/repo/Codes/paper6/Robust_Rerun/results/dry_run_report.json
+  active judge provider OK.
+=== [GPU] step 05 cut_stability Thu Jun 25 07:12:35 UTC 2026 ===
+=== STEP 05  multi-seed cut stability ===
+  qwen2.5-7b: all done, skipping load.
+  aya-23-8b: all done, skipping load.
+  written: /root/repo/Codes/paper6/Robust_Rerun/results/cut_units.csv
+=== [GPU] step 08 rag_local   Thu Jun 25 07:12:37 UTC 2026 ===
+=== STEP 08  leakage-free RAG (local decoders, TEST concepts) ===
+  qwen2.5-7b: all done, skipping load.
+  aya-23-8b: all done, skipping load.
+  written: /root/repo/Codes/paper6/Robust_Rerun/results/rag_local.csv
+=== [CPU] step 06 propagation Thu Jun 25 07:12:38 UTC 2026 ===
+Traceback (most recent call last):
+  File "/root/repo/Codes/paper6/Common_00/kg_algos.py", line 74, in personalised_pagerank
+    return nx.pagerank(ug, alpha=alpha, personalization=pers,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/lib/python3.11/site-packages/networkx/utils/decorators.py", line 788, in func
+    return argmap._lazy_compile(__wrapper)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<class 'networkx.utils.decorators.argmap'> compilation 8", line 3, in argmap_pagerank_5
+  File "/opt/conda/lib/python3.11/site-packages/networkx/utils/backends.py", line 967, in __call__
+    return self.orig_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/lib/python3.11/site-packages/networkx/algorithms/link_analysis/pagerank_alg.py", line 111, in pagerank
+    return _pagerank_scipy(
+           ^^^^^^^^^^^^^^^^
+  File "/opt/conda/lib/python3.11/site-packages/networkx/algorithms/link_analysis/pagerank_alg.py", line 454, in _pagerank_scipy
+    import scipy as sp
+ModuleNotFoundError: No module named 'scipy'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/repo/Codes/paper6/Robust_Rerun/step_06_propagation.py", line 129, in <module>
+    main()
+  File "/root/repo/Codes/paper6/Robust_Rerun/step_06_propagation.py", line 80, in main
+    ppr = personalised_pagerank(g2, seeds=seeds, alpha=ecfg["pagerank_alpha"],
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/repo/Codes/paper6/Common_00/kg_algos.py", line 77, in personalised_pagerank
+    return nx.pagerank(ug, alpha=alpha, max_iter=max_iter, weight="weight")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<class 'networkx.utils.decorators.argmap'> compilation 8", line 3, in argmap_pagerank_5
+  File "/opt/conda/lib/python3.11/site-packages/networkx/utils/backends.py", line 967, in __call__
+    return self.orig_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/lib/python3.11/site-packages/networkx/algorithms/link_analysis/pagerank_alg.py", line 111, in pagerank
+    return _pagerank_scipy(
+           ^^^^^^^^^^^^^^^^
+  File "/opt/conda/lib/python3.11/site-packages/networkx/algorithms/link_analysis/pagerank_alg.py", line 454, in _pagerank_scipy
+    import scipy as sp
+ModuleNotFoundError: No module named 'scipy'
+=== [API] step 07 calibrate   Thu Jun 25 07:12:40 UTC 2026 ===
+  deepseek-chat/crows_pairs/en: swept n_facts [1, 2, 3, 4]
+  deepseek-chat/crows_pairs/hi: swept n_facts [1, 2, 3, 4]
+  deepseek-chat/crows_pairs/bn: swept n_facts [1, 2, 3, 4]
+  deepseek-chat/indian_bias/en: swept n_facts [1, 2, 3, 4]
+  deepseek-chat/indian_bias/hi: swept n_facts [1, 2, 3, 4]
+  deepseek-chat/indian_bias/bn: swept n_facts [1, 2, 3, 4]
+  llama-3.3-70b/crows_pairs/en: swept n_facts [1, 2, 3, 4]
+  llama-3.3-70b/crows_pairs/hi: swept n_facts [1, 2, 3, 4]
+  llama-3.3-70b/crows_pairs/bn: swept n_facts [1, 2, 3, 4]
+  llama-3.3-70b/indian_bias/en: swept n_facts [1, 2, 3, 4]
+  llama-3.3-70b/indian_bias/hi: swept n_facts [1, 2, 3, 4]
+  llama-3.3-70b/indian_bias/bn: swept n_facts [1, 2, 3, 4]
+  gpt-oss-20b/crows_pairs/en: swept n_facts [1, 2, 3, 4]
+  gpt-oss-20b/crows_pairs/hi: swept n_facts [1, 2, 3, 4]
+  gpt-oss-20b/crows_pairs/bn: swept n_facts [1, 2, 3, 4]
+  gpt-oss-20b/indian_bias/en: swept n_facts [1, 2, 3, 4]
+  gpt-oss-20b/indian_bias/hi: swept n_facts [1, 2, 3, 4]
+  gpt-oss-20b/indian_bias/bn: swept n_facts [1, 2, 3, 4]
+=== STEP 07  calibration ===
+  mean deviation by n_facts: {}
+  recommended n_facts: 3
+  written: /root/repo/Codes/paper6/Robust_Rerun/results/calibration.csv and /root/repo/Codes/paper6/Robust_Rerun/results/calibration.json
+=== [API] step 09 rag_api     Thu Jun 25 07:12:41 UTC 2026 ===
