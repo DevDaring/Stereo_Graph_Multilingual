@@ -245,3 +245,26 @@ Traceback (most recent call last):
     import scipy as sp
 ModuleNotFoundError: No module named 'scipy'
 === [API] step 07 calibrate   Thu Jun 25 00:33:54 UTC 2026 ===
+  deepseek-chat/crows_pairs/en: swept n_facts [1, 2, 3, 4]
+  deepseek-chat/crows_pairs/hi: swept n_facts [1, 2, 3, 4]
+  deepseek-chat/crows_pairs/bn: swept n_facts [1, 2, 3, 4]
+  deepseek-chat/indian_bias/en: swept n_facts [1, 2, 3, 4]
+  deepseek-chat/indian_bias/hi: swept n_facts [1, 2, 3, 4]
+  deepseek-chat/indian_bias/bn: swept n_facts [1, 2, 3, 4]
+  llama-3.3-70b/crows_pairs/en: swept n_facts [1, 2, 3, 4]
+  llama-3.3-70b/crows_pairs/hi: swept n_facts [1, 2, 3, 4]
+  llama-3.3-70b/crows_pairs/bn: swept n_facts [1, 2, 3, 4]
+  llama-3.3-70b/indian_bias/en: swept n_facts [1, 2, 3, 4]
+  llama-3.3-70b/indian_bias/hi: swept n_facts [1, 2, 3, 4]
+  llama-3.3-70b/indian_bias/bn: swept n_facts [1, 2, 3, 4]
+  gpt-oss-20b/crows_pairs/en: swept n_facts [1, 2, 3, 4]
+  gpt-oss-20b/crows_pairs/hi: swept n_facts [1, 2, 3, 4]
+  gpt-oss-20b/crows_pairs/bn: swept n_facts [1, 2, 3, 4]
+  gpt-oss-20b/indian_bias/en: swept n_facts [1, 2, 3, 4]
+  gpt-oss-20b/indian_bias/hi: swept n_facts [1, 2, 3, 4]
+  gpt-oss-20b/indian_bias/bn: swept n_facts [1, 2, 3, 4]
+=== STEP 07  calibration ===
+  mean deviation by n_facts: {1: 12.580068588250937, 2: 10.03932348845884, 3: 15.52684832500558, 4: 15.671678007848376}
+  recommended n_facts: 2
+  written: /root/repo/Codes/paper6/Robust_Rerun/results/calibration.csv and /root/repo/Codes/paper6/Robust_Rerun/results/calibration.json
+=== [API] step 09 rag_api     Thu Jun 25 03:46:55 UTC 2026 ===

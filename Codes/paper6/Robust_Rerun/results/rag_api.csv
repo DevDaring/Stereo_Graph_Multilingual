@@ -1,0 +1,5 @@
+subject_model,dataset,language,condition,n_facts,expressed_bias,deviation,n_decided,refusals,split,status
+deepseek-chat,crows_pairs,en,base,3,65.0,15.0,60,0,test,ok
+deepseek-chat,crows_pairs,en,safety_prompt,3,51.6667,1.6667,60,0,test,ok
+deepseek-chat,crows_pairs,en,translate_en,3,65.0,15.0,60,0,test,ok
+deepseek-chat,crows_pairs,en,flat_dict,3,66.6667,16.6667,60,0,test,ok
