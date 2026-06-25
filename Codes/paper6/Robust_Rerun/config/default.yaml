@@ -73,7 +73,11 @@ backbone:
 # base_url and model id live here (non-secret); only the keys live in .env.
 # ---------------------------------------------------------------------------
 judge:
-  provider: linkapi          # one of: linkapi | deepseek | mistral
+  provider: deepseek         # one of: linkapi | deepseek | mistral
+  # switched from linkapi (gemini-2.5-pro): the reasoning subject gpt-oss-20b rarely
+  # returns a clean A/B, so the slow gemini extractor was the step-09 bottleneck.
+  # DeepSeek extracts the same A/B label far faster; extractor choice does not change
+  # the bias measurement (it only parses the chosen letter from a messy reply).
   temperature: 0.0
   max_tokens: 512            # gemini-2.5-pro reasons; leave room for a visible answer
   timeout_s: 90

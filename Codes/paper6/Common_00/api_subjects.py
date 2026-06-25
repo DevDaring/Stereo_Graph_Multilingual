@@ -19,9 +19,12 @@ SUBJECTS: Dict[str, Dict] = {
         "model": "meta-llama/llama-3.3-70b-instruct",
         "key_env_vars": ["OPENROUTER_API_KEY_1", "OPENROUTER_API_KEY_2"]},
     "gpt-oss-20b": {
-        "base_url_default": "https://openrouter.ai/api/v1", "base_url_env": "OPENROUTER_API_BASE_URL",
+        # NanoGPT (paid subscription) - OpenRouter's free tier rate-limited this and the
+        # 64-token budget truncated its hidden reasoning, returning empty replies.
+        "base_url_default": "https://nano-gpt.com/api/v1", "base_url_env": "Nano_GPT_Base_URL",
         "model": "openai/gpt-oss-20b",
-        "key_env_vars": ["OPENROUTER_API_KEY_1", "OPENROUTER_API_KEY_2"]},
+        "key_env_vars": ["NanoGPT_API_Key", "Nano_GPT_API_KEY"],
+        "max_tokens": 1024},   # gpt-oss-20b reasons before answering; give room for a visible letter
 }
 
 
@@ -39,5 +42,6 @@ def build_subject(short: str, max_tokens: int = 64) -> Optional[JudgeProvider]:
     keys = get_keys(spec["key_env_vars"])
     if not keys:
         return None
+    mt = spec.get("max_tokens", max_tokens)   # per-subject override (reasoning models need more)
     return JudgeProvider(name=short, base_url=subject_base_url(spec), model=spec["model"],
-                         keys=keys, temperature=0.0, max_tokens=max_tokens, timeout_s=60)
+                         keys=keys, temperature=0.0, max_tokens=mt, timeout_s=120)

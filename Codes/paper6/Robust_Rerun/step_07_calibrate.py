@@ -64,7 +64,18 @@ def run(config, resume=True):
 
     # pick the grid value with the smallest mean absolute deviation from neutral
     means = {nf: (sum(v) / len(v)) for nf, v in dev_by_nfacts.items() if v}
-    recommended = min(means, key=means.get) if means else config["rag"]["max_neighbours"]
+    if not means:
+        # nothing recomputed this run (all VAL cells already done on a resume). Keep the
+        # existing calibration.json rather than overwriting it with a fallback default.
+        if os.path.exists(JSON):
+            print("=== STEP 07  calibration (already complete; keeping existing) ===")
+            with open(JSON, "r", encoding="utf-8") as f:
+                print(f"  recommended n_facts: {json.load(f).get('recommended_n_facts')}")
+            print(f"  written: {OUT} and {JSON}")
+            return
+        recommended = config["rag"]["max_neighbours"]
+    else:
+        recommended = min(means, key=means.get)
     write_json(JSON, {"recommended_n_facts": recommended,
                       "mean_deviation_by_n_facts": {str(k): round(v, 4) for k, v in means.items()}})
     print("=== STEP 07  calibration ===")
