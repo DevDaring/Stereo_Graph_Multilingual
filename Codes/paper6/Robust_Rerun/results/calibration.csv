@@ -54,3 +54,6 @@ gpt-oss-20b,crows_pairs,en,4,100.0,50.0,7,ok
 gpt-oss-20b,crows_pairs,hi,1,66.6667,16.6667,6,ok
 gpt-oss-20b,crows_pairs,hi,2,33.3333,16.6667,6,ok
 gpt-oss-20b,crows_pairs,hi,3,66.6667,16.6667,3,ok
+gpt-oss-20b,crows_pairs,hi,4,57.1429,7.1429,7,ok
+gpt-oss-20b,crows_pairs,bn,1,44.4444,5.5556,9,ok
+gpt-oss-20b,crows_pairs,bn,2,42.8571,7.1429,7,ok
