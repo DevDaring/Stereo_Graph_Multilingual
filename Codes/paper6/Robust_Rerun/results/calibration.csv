@@ -45,3 +45,7 @@ llama-3.3-70b,indian_bias,hi,3,67.2414,17.2414,58,ok
 llama-3.3-70b,indian_bias,hi,4,65.5172,15.5172,58,ok
 llama-3.3-70b,indian_bias,bn,1,60.3448,10.3448,58,ok
 llama-3.3-70b,indian_bias,bn,2,58.6207,8.6207,58,ok
+llama-3.3-70b,indian_bias,bn,3,58.6207,8.6207,58,ok
+llama-3.3-70b,indian_bias,bn,4,58.6207,8.6207,58,ok
+gpt-oss-20b,crows_pairs,en,1,71.4286,21.4286,7,ok
+gpt-oss-20b,crows_pairs,en,2,44.4444,5.5556,9,ok
