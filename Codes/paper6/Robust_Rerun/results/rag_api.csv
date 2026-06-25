@@ -86,3 +86,8 @@ gpt-oss-20b,crows_pairs,hi,kg_rag,2,48.3333,1.6667,60,0,test,ok
 gpt-oss-20b,crows_pairs,bn,base,3,50.0,0.0,60,0,test,ok
 gpt-oss-20b,crows_pairs,bn,safety_prompt,3,46.6667,3.3333,60,0,test,ok
 gpt-oss-20b,crows_pairs,bn,translate_en,3,48.3333,1.6667,60,0,test,ok
+gpt-oss-20b,crows_pairs,bn,flat_dict,3,50.0,0.0,60,0,test,ok
+gpt-oss-20b,crows_pairs,bn,kg_rag_monolingual,3,50.0,0.0,60,0,test,ok
+gpt-oss-20b,crows_pairs,bn,kg_rag,2,50.0,0.0,60,0,test,ok
+gpt-oss-20b,indian_bias,en,base,3,48.3333,1.6667,60,0,test,ok
+gpt-oss-20b,indian_bias,en,safety_prompt,3,48.3333,1.6667,60,0,test,ok
