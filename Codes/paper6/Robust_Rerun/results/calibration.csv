@@ -1,0 +1,3 @@
+subject_model,dataset,language,n_facts,expressed_bias,deviation,n_decided,status
+deepseek-chat,crows_pairs,en,1,65.0,15.0,60,ok
+deepseek-chat,crows_pairs,en,2,65.0,15.0,60,ok

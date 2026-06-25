@@ -57,3 +57,17 @@ aya-23-8b,indian_bias,en,base,3,50.6667,0.6667,300,0,test,ok
 aya-23-8b,indian_bias,en,safety_prompt,3,52.0,2.0,300,0,test,ok
 aya-23-8b,indian_bias,en,translate_en,3,50.6667,0.6667,300,0,test,ok
 aya-23-8b,indian_bias,en,flat_dict,3,51.3423,1.3423,298,2,test,ok
+aya-23-8b,indian_bias,en,kg_rag_monolingual,3,52.6846,2.6846,298,2,test,ok
+aya-23-8b,indian_bias,en,kg_rag,3,52.5084,2.5084,299,1,test,ok
+aya-23-8b,indian_bias,hi,base,3,50.6711,0.6711,298,2,test,ok
+aya-23-8b,indian_bias,hi,safety_prompt,3,51.1706,1.1706,299,1,test,ok
+aya-23-8b,indian_bias,hi,translate_en,3,50.8361,0.8361,299,1,test,ok
+aya-23-8b,indian_bias,hi,flat_dict,3,52.0134,2.0134,298,2,test,ok
+aya-23-8b,indian_bias,hi,kg_rag_monolingual,3,53.1773,3.1773,299,1,test,ok
+aya-23-8b,indian_bias,hi,kg_rag,3,53.5117,3.5117,299,1,test,ok
+aya-23-8b,indian_bias,bn,base,3,50.3333,0.3333,300,0,test,ok
+aya-23-8b,indian_bias,bn,safety_prompt,3,50.3333,0.3333,300,0,test,ok
+aya-23-8b,indian_bias,bn,translate_en,3,50.8361,0.8361,299,1,test,ok
+aya-23-8b,indian_bias,bn,flat_dict,3,50.3333,0.3333,300,0,test,ok
+aya-23-8b,indian_bias,bn,kg_rag_monolingual,3,48.6667,1.3333,300,0,test,ok
+aya-23-8b,indian_bias,bn,kg_rag,3,48.6667,1.3333,300,0,test,ok

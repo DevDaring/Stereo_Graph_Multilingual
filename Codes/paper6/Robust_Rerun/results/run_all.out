@@ -196,3 +196,52 @@ ALL 3 LEAKAGE CHECKS PASSED
   qwen2.5-7b/indian_bias/bn: 6 conditions done.
   qwen2.5-7b: done.
 Loading weights:   0%|          | 0/258 [00:00<?, ?it/s]Loading weights:   0%|          | 1/258 [00:00<03:16,  1.31it/s]Loading weights:   2%|▏         | 5/258 [00:00<00:36,  6.89it/s]Loading weights:   5%|▍         | 12/258 [00:01<00:14, 16.86it/s]Loading weights:   7%|▋         | 19/258 [00:01<00:09, 25.36it/s]Loading weights:   9%|▉         | 24/258 [00:01<00:08, 29.15it/s]Loading weights:  11%|█         | 29/258 [00:01<00:07, 31.92it/s]Loading weights:  14%|█▍        | 36/258 [00:01<00:05, 40.03it/s]Loading weights:  17%|█▋        | 43/258 [00:01<00:04, 46.60it/s]Loading weights:  19%|█▉        | 49/258 [00:01<00:04, 49.43it/s]Loading weights:  21%|██▏       | 55/258 [00:01<00:04, 48.63it/s]Loading weights:  24%|██▎       | 61/258 [00:01<00:04, 48.13it/s]Loading weights:  26%|██▋       | 68/258 [00:02<00:03, 53.22it/s]Loading weights:  29%|██▉       | 75/258 [00:02<00:03, 57.19it/s]Loading weights:  31%|███▏      | 81/258 [00:02<00:03, 57.27it/s]Loading weights:  34%|███▎      | 87/258 [00:02<00:03, 53.98it/s]Loading weights:  36%|███▌      | 93/258 [00:02<00:03, 51.98it/s]Loading weights:  39%|███▉      | 100/258 [00:02<00:02, 56.28it/s]Loading weights:  41%|████▏     | 107/258 [00:02<00:02, 59.47it/s]Loading weights:  44%|████▍     | 114/258 [00:02<00:02, 61.95it/s]Loading weights:  47%|████▋     | 121/258 [00:03<00:02, 57.71it/s]Loading weights:  49%|████▉     | 127/258 [00:03<00:02, 54.56it/s]Loading weights:  52%|█████▏    | 133/258 [00:03<00:02, 52.36it/s]Loading weights:  54%|█████▍    | 140/258 [00:03<00:02, 56.42it/s]Loading weights:  57%|█████▋    | 147/258 [00:03<00:01, 58.66it/s]Loading weights:  59%|█████▉    | 153/258 [00:03<00:01, 58.33it/s]Loading weights:  62%|██████▏   | 159/258 [00:03<00:01, 54.62it/s]Loading weights:  64%|██████▍   | 165/258 [00:03<00:01, 52.21it/s]Loading weights:  67%|██████▋   | 172/258 [00:03<00:01, 56.25it/s]Loading weights:  69%|██████▉   | 179/258 [00:04<00:01, 59.30it/s]Loading weights:  72%|███████▏  | 186/258 [00:04<00:01, 61.51it/s]Loading weights:  75%|███████▍  | 193/258 [00:04<00:01, 57.00it/s]Loading weights:  77%|███████▋  | 199/258 [00:04<00:01, 53.77it/s]Loading weights:  79%|███████▉  | 205/258 [00:04<00:01, 51.59it/s]Loading weights:  82%|████████▏ | 212/258 [00:04<00:00, 55.59it/s]Loading weights:  85%|████████▍ | 219/258 [00:04<00:00, 58.75it/s]Loading weights:  87%|████████▋ | 225/258 [00:04<00:00, 58.39it/s]Loading weights:  90%|████████▉ | 231/258 [00:04<00:00, 54.72it/s]Loading weights:  92%|█████████▏| 237/258 [00:05<00:00, 52.35it/s]Loading weights:  95%|█████████▍| 244/258 [00:05<00:00, 56.30it/s]Loading weights:  97%|█████████▋| 251/258 [00:05<00:00, 59.36it/s]Loading weights: 100%|██████████| 258/258 [00:05<00:00, 61.45it/s]Loading weights: 100%|██████████| 258/258 [00:05<00:00, 47.53it/s]
+  aya-23-8b/crows_pairs/en: 6 conditions done.
+  aya-23-8b/crows_pairs/hi: 6 conditions done.
+  aya-23-8b/crows_pairs/bn: 6 conditions done.
+  aya-23-8b/indian_bias/en: 6 conditions done.
+  aya-23-8b/indian_bias/hi: 6 conditions done.
+  aya-23-8b/indian_bias/bn: 6 conditions done.
+  aya-23-8b: done.
+  written: /root/repo/Codes/paper6/Robust_Rerun/results/rag_local.csv
+=== [CPU] step 06 propagation Thu Jun 25 00:33:52 UTC 2026 ===
+Traceback (most recent call last):
+  File "/root/repo/Codes/paper6/Common_00/kg_algos.py", line 74, in personalised_pagerank
+    return nx.pagerank(ug, alpha=alpha, personalization=pers,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/lib/python3.11/site-packages/networkx/utils/decorators.py", line 788, in func
+    return argmap._lazy_compile(__wrapper)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<class 'networkx.utils.decorators.argmap'> compilation 8", line 3, in argmap_pagerank_5
+  File "/opt/conda/lib/python3.11/site-packages/networkx/utils/backends.py", line 967, in __call__
+    return self.orig_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/lib/python3.11/site-packages/networkx/algorithms/link_analysis/pagerank_alg.py", line 111, in pagerank
+    return _pagerank_scipy(
+           ^^^^^^^^^^^^^^^^
+  File "/opt/conda/lib/python3.11/site-packages/networkx/algorithms/link_analysis/pagerank_alg.py", line 454, in _pagerank_scipy
+    import scipy as sp
+ModuleNotFoundError: No module named 'scipy'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/repo/Codes/paper6/Robust_Rerun/step_06_propagation.py", line 129, in <module>
+    main()
+  File "/root/repo/Codes/paper6/Robust_Rerun/step_06_propagation.py", line 80, in main
+    ppr = personalised_pagerank(g2, seeds=seeds, alpha=ecfg["pagerank_alpha"],
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/repo/Codes/paper6/Common_00/kg_algos.py", line 77, in personalised_pagerank
+    return nx.pagerank(ug, alpha=alpha, max_iter=max_iter, weight="weight")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<class 'networkx.utils.decorators.argmap'> compilation 8", line 3, in argmap_pagerank_5
+  File "/opt/conda/lib/python3.11/site-packages/networkx/utils/backends.py", line 967, in __call__
+    return self.orig_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/conda/lib/python3.11/site-packages/networkx/algorithms/link_analysis/pagerank_alg.py", line 111, in pagerank
+    return _pagerank_scipy(
+           ^^^^^^^^^^^^^^^^
+  File "/opt/conda/lib/python3.11/site-packages/networkx/algorithms/link_analysis/pagerank_alg.py", line 454, in _pagerank_scipy
+    import scipy as sp
+ModuleNotFoundError: No module named 'scipy'
+=== [API] step 07 calibrate   Thu Jun 25 00:33:54 UTC 2026 ===
