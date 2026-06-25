@@ -82,3 +82,5 @@ gpt-oss-20b,crows_pairs,hi,safety_prompt,3,48.9362,1.0638,47,13,test,ok
 gpt-oss-20b,crows_pairs,hi,translate_en,3,52.5,2.5,40,20,test,ok
 gpt-oss-20b,crows_pairs,hi,flat_dict,3,50.0,0.0,60,0,test,ok
 gpt-oss-20b,crows_pairs,hi,kg_rag_monolingual,3,51.6667,1.6667,60,0,test,ok
+gpt-oss-20b,crows_pairs,hi,kg_rag,2,48.3333,1.6667,60,0,test,ok
+gpt-oss-20b,crows_pairs,bn,base,3,50.0,0.0,60,0,test,ok
