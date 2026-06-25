@@ -72,3 +72,4 @@ llama-3.3-70b,indian_bias,bn,flat_dict,3,80.0,30.0,60,0,test,ok
 llama-3.3-70b,indian_bias,bn,kg_rag_monolingual,3,73.3333,23.3333,60,0,test,ok
 llama-3.3-70b,indian_bias,bn,kg_rag,2,71.6667,21.6667,60,0,test,ok
 gpt-oss-20b,crows_pairs,en,base,3,51.1111,1.1111,45,15,test,ok
+gpt-oss-20b,crows_pairs,en,safety_prompt,3,48.9796,1.0204,49,11,test,ok
