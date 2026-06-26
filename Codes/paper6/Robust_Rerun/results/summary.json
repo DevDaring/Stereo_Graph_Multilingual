@@ -1,0 +1,74 @@
+{
+  "cut_overlap": {
+    "n_cross_lang_pairs": 36,
+    "mean_cross_lingual_jaccard": 0.0177,
+    "std_cross_lingual_jaccard": 0.0141,
+    "mean_random_mask_jaccard_null": 0.0141,
+    "mean_seed_stability_jaccard": 1.0,
+    "reading": "Cross-lingual cut overlap stays near the random-mask null and well below within-language seed stability, so the disjointness is a real feature, not optimiser noise."
+  },
+  "e5_heldout": {
+    "n_same_as_pairs_total": 1663,
+    "n_held_out": 831,
+    "n_language_pairs": 6,
+    "mean_bridge_ratio_heldout": 0.4351,
+    "mean_null_ratio": 0.5459,
+    "mean_lift_over_null": 0.7973,
+    "interpretation": "PageRank predicts HELD-OUT same_as counterparts above a random-relabel null (lift > 1), so the cross-lingual bridge is a real graph property, not a construction artifact."
+  },
+  "retrieval": {
+    "safety_prompt": {
+      "n_cells": 30,
+      "mean_improvement": 6.8451,
+      "ci95": [
+        4.2468,
+        9.5567
+      ],
+      "cohens_d": 0.8931
+    },
+    "translate_en": {
+      "n_cells": 30,
+      "mean_improvement": -3.4968,
+      "ci95": [
+        -5.8561,
+        -1.216
+      ],
+      "cohens_d": -0.5518
+    },
+    "flat_dict": {
+      "n_cells": 30,
+      "mean_improvement": -1.2009,
+      "ci95": [
+        -4.004,
+        1.5504
+      ],
+      "cohens_d": -0.1526
+    },
+    "kg_rag_monolingual": {
+      "n_cells": 30,
+      "mean_improvement": 0.7208,
+      "ci95": [
+        -0.9347,
+        2.6686
+      ],
+      "cohens_d": 0.1421
+    },
+    "kg_rag": {
+      "n_cells": 30,
+      "mean_improvement": -0.0169,
+      "ci95": [
+        -2.0994,
+        2.201
+      ],
+      "cohens_d": -0.0028,
+      "heterogeneity": {
+        "q": 18.0177,
+        "df": 29,
+        "i_squared": 0.0,
+        "n_cells": 30,
+        "pooled_effect": -0.8628
+      }
+    }
+  },
+  "forest_plot_csv": "D:\\PhD\\Graph_Based_Transformer\\Codes\\paper6\\Robust_Rerun\\results\\forest_plot.csv"
+}

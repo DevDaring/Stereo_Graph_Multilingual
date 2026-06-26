@@ -1,0 +1,62 @@
+=== STEP 09  leakage-free RAG (API subjects, TEST concepts) ===
+  deepseek-chat/crows_pairs/en: 6 conditions done.
+  deepseek-chat/crows_pairs/hi: 6 conditions done.
+  deepseek-chat/crows_pairs/bn: 6 conditions done.
+  deepseek-chat/indian_bias/en: 6 conditions done.
+  deepseek-chat/indian_bias/hi: 6 conditions done.
+  deepseek-chat/indian_bias/bn: 6 conditions done.
+  deepseek-chat: done.
+  llama-3.3-70b/crows_pairs/en: 6 conditions done.
+  llama-3.3-70b/crows_pairs/hi: 6 conditions done.
+  llama-3.3-70b/crows_pairs/bn: 6 conditions done.
+  llama-3.3-70b/indian_bias/en: 6 conditions done.
+  llama-3.3-70b/indian_bias/hi: 6 conditions done.
+  llama-3.3-70b/indian_bias/bn: 6 conditions done.
+  llama-3.3-70b: done.
+=== STEP 09  leakage-free RAG (API subjects, TEST concepts) ===
+  deepseek-chat/crows_pairs/en: 6 conditions done.
+  deepseek-chat/crows_pairs/hi: 6 conditions done.
+  deepseek-chat/crows_pairs/bn: 6 conditions done.
+  deepseek-chat/indian_bias/en: 6 conditions done.
+  deepseek-chat/indian_bias/hi: 6 conditions done.
+  deepseek-chat/indian_bias/bn: 6 conditions done.
+  deepseek-chat: done.
+  llama-3.3-70b/crows_pairs/en: 6 conditions done.
+  llama-3.3-70b/crows_pairs/hi: 6 conditions done.
+  llama-3.3-70b/crows_pairs/bn: 6 conditions done.
+  llama-3.3-70b/indian_bias/en: 6 conditions done.
+  llama-3.3-70b/indian_bias/hi: 6 conditions done.
+  llama-3.3-70b/indian_bias/bn: 6 conditions done.
+  llama-3.3-70b: done.
+=== STEP 09  leakage-free RAG (API subjects, TEST concepts) ===
+  deepseek-chat/crows_pairs/en: 6 conditions done.
+  deepseek-chat/crows_pairs/hi: 6 conditions done.
+  deepseek-chat/crows_pairs/bn: 6 conditions done.
+  deepseek-chat/indian_bias/en: 6 conditions done.
+  deepseek-chat/indian_bias/hi: 6 conditions done.
+  deepseek-chat/indian_bias/bn: 6 conditions done.
+  deepseek-chat: done.
+  llama-3.3-70b/crows_pairs/en: 6 conditions done.
+  llama-3.3-70b/crows_pairs/hi: 6 conditions done.
+  llama-3.3-70b/crows_pairs/bn: 6 conditions done.
+  llama-3.3-70b/indian_bias/en: 6 conditions done.
+  llama-3.3-70b/indian_bias/hi: 6 conditions done.
+  llama-3.3-70b/indian_bias/bn: 6 conditions done.
+  llama-3.3-70b: done.
+  gpt-oss-20b/crows_pairs/en: 6 conditions done.
+  gpt-oss-20b/crows_pairs/hi: 6 conditions done.
+  gpt-oss-20b/crows_pairs/bn: 6 conditions done.
+  gpt-oss-20b/indian_bias/en: 6 conditions done.
+  gpt-oss-20b/indian_bias/hi: 6 conditions done.
+  gpt-oss-20b/indian_bias/bn: 6 conditions done.
+  gpt-oss-20b: done.
+  written: D:\PhD\Graph_Based_Transformer\Codes\paper6\Robust_Rerun\results\rag_api.csv
+=== STEP 10  analysis ===
+  cut Jaccard cross=0.0177 +/-0.0141 null=0.0141 seed_stab=1.0
+  held-out bridge=0.4351 null=0.5459 lift=0.7973
+  safety_prompt        mean_improv=+6.85 CI[4.2468, 9.5567] d=0.8931 n=30
+  translate_en         mean_improv=-3.50 CI[-5.8561, -1.216] d=-0.5518 n=30
+  flat_dict            mean_improv=-1.20 CI[-4.004, 1.5504] d=-0.1526 n=30
+  kg_rag_monolingual   mean_improv=+0.72 CI[-0.9347, 2.6686] d=0.1421 n=30
+  kg_rag               mean_improv=-0.02 CI[-2.0994, 2.201] d=-0.0028 n=30
+  written: D:\PhD\Graph_Based_Transformer\Codes\paper6\Robust_Rerun\results\summary.json

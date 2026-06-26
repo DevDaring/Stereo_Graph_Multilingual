@@ -19,11 +19,15 @@ SUBJECTS: Dict[str, Dict] = {
         "model": "meta-llama/llama-3.3-70b-instruct",
         "key_env_vars": ["OPENROUTER_API_KEY_1", "OPENROUTER_API_KEY_2"]},
     "gpt-oss-20b": {
-        # NanoGPT (paid subscription) - OpenRouter's free tier rate-limited this and the
-        # 64-token budget truncated its hidden reasoning, returning empty replies.
-        "base_url_default": "https://nano-gpt.com/api/v1", "base_url_env": "Nano_GPT_Base_URL",
-        "model": "openai/gpt-oss-20b",
-        "key_env_vars": ["NanoGPT_API_Key", "Nano_GPT_API_KEY"],
+        # AWS Bedrock OpenAI-compatible endpoint, 2 API keys round-robin - ~2x faster than
+        # NanoGPT in benchmarking. Bedrock returns the chain-of-thought inside the content as
+        # <reasoning>...</reasoning><answer>, which the A/B parser strips (see rag_leakfree).
+        # (NanoGPT fallback: base https://nano-gpt.com/api/v1, model openai/gpt-oss-20b,
+        #  keys NanoGPT_API_Key / Nano_GPT_API_KEY.)
+        "base_url_default": "https://bedrock-runtime.us-west-2.amazonaws.com/openai/v1",
+        "base_url_env": "AWS_BEDROCK_BASE_URL",
+        "model": "openai.gpt-oss-20b-1:0",
+        "key_env_vars": ["AWS_Bedrock_API_Key1", "AWS_Bedrock_API_Key2"],
         "max_tokens": 1024},   # gpt-oss-20b reasons before answering; give room for a visible letter
 }
 

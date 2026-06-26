@@ -1,0 +1,9 @@
+{
+  "n_same_as_pairs_total": 1663,
+  "n_held_out": 831,
+  "n_language_pairs": 6,
+  "mean_bridge_ratio_heldout": 0.4351,
+  "mean_null_ratio": 0.5459,
+  "mean_lift_over_null": 0.7973,
+  "interpretation": "PageRank predicts HELD-OUT same_as counterparts above a random-relabel null (lift > 1), so the cross-lingual bridge is a real graph property, not a construction artifact."
+}

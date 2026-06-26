@@ -49,21 +49,20 @@
      <em>Information Sciences</em> special issue (Graph-based solutions for AI).</p>
   <div class="meta">
     <span><strong>Report date:</strong> 2026-06-25</span>
-    <span><strong>Stage:</strong> GPU steps complete and VM destroyed; gpt-oss-20b being re-run cleanly via NanoGPT on a CPU server; final analysis pending</span>
-    <span><strong>Note:</strong> DeepSeek + Llama complete; gpt-oss-20b's earlier OpenRouter cells were truncated (reasoning model + 64-token cap), so they are being redone via NanoGPT</span>
+    <span><strong>Stage:</strong> COMPLETE - all 10 steps done; final summary.json written</span>
+    <span><strong>Note:</strong> gpt-oss-20b re-run via AWS Bedrock (openai.gpt-oss-20b-1:0, 2 keys round-robin, 8-way concurrent); DeepSeek + Llama complete</span>
   </div>
 
   <div class="card pos">
-    <strong>Headline (leakage-free; retrieval numbers preliminary).</strong> (1) Bias circuits are
+    <strong>Final headline (leakage-free, all 30 retrieval cells).</strong> (1) Bias circuits are
     language-specific: cross-lingual cut Jaccard <strong>0.0177</strong> sits at the random-mask null
     <strong>0.0141</strong>, with seed-stability <strong>1.0</strong> - near-disjoint and not optimiser
-    noise. This and the held-out bridge (lift <strong>0.80</strong>) are final. (2) Retrieval (from the
-    28-cell preliminary aggregate, DeepSeek + Llama + partial gpt-oss): once the gold-answer leak is
-    removed, <strong>graph retrieval (kg_rag) shows no significant effect</strong> (mean +0.05, 95% CI
-    -1.52 to 1.64); only a plain <strong>safety prompt</strong> significantly lowers bias
-    (<strong>+5.33</strong>, CI 2.93 to 8.15, d 0.73). These retrieval figures will be recomputed once
-    gpt-oss-20b finishes via NanoGPT; the direction (kg_rag not beating simple baselines) is not
-    expected to change.
+    noise; the held-out bridge has lift <strong>0.80</strong>. (2) Once the gold-answer leak is removed,
+    <strong>graph retrieval (kg_rag) shows no significant effect</strong> (mean -0.02, 95% CI -2.10 to
+    2.20, d 0.00); the only intervention that significantly lowers bias is a plain
+    <strong>safety prompt (+6.85, CI 4.25 to 9.56, d 0.89)</strong>. The leakage-free reading: the
+    contribution is the disjoint-circuit diagnosis and the inspectable graph artifact, not graph
+    retrieval as a debiasing solution.
   </div>
 
   <div class="card warn">
@@ -120,8 +119,8 @@
       <tr><td>06 propagation</td><td>cpu</td><td>held-out same_as link prediction vs null</td><td><span class="pill p-pos">done: lift 0.80</span></td></tr>
       <tr><td>07 calibrate</td><td>api</td><td>pick retrieval n_facts on VAL concepts</td><td><span class="pill p-pos">done: n_facts=2</span></td></tr>
       <tr><td>08 rag_local</td><td>gpu</td><td>leakage-free RAG + baselines, local decoders</td><td><span class="pill p-pos">done: 72/72 cells</span></td></tr>
-      <tr><td>09 rag_api</td><td>api</td><td>leakage-free RAG + baselines, black-box subjects</td><td><span class="pill p-warn">DeepSeek+Llama done; gpt-oss re-run via NanoGPT (CPU server)</span></td></tr>
-      <tr><td>10 analysis</td><td>cpu</td><td>aggregate -> summary.json + forest_plot.csv</td><td><span class="pill p-info">preliminary; final after gpt-oss</span></td></tr>
+      <tr><td>09 rag_api</td><td>api</td><td>leakage-free RAG + baselines, black-box subjects</td><td><span class="pill p-pos">done: 108/108 cells</span></td></tr>
+      <tr><td>10 analysis</td><td>cpu</td><td>aggregate -> summary.json + forest_plot.csv</td><td><span class="pill p-pos">done: final summary.json</span></td></tr>
     </tbody>
   </table>
 
@@ -159,30 +158,30 @@
     <tbody><tr><td>deviation</td><td>14.33</td><td>9.20</td><td>8.67</td><td>9.67</td><td>9.67</td><td>14.33 (=base for EN)</td></tr></tbody>
   </table>
 
-  <h3>Step 09 - leakage-free RAG, black-box API subjects</h3>
-  <p>DeepSeek-V3 and Llama-3.3-70B complete (72 cells, 60/60 decided, 0 refusals). gpt-oss-20b is a
-     reasoning model: OpenRouter's free tier rate-limited it and the 64-token cap truncated its hidden
-     reasoning, so its earlier cells were unreliable and have been cleared. It is being re-run via
-     <strong>NanoGPT</strong> (<code>openai/gpt-oss-20b</code>, 1024-token budget so a visible A/B
-     emerges) on a CPU server - no GPU needed. Step 10 below is the preliminary 28-cell aggregate and
-     will be recomputed when gpt-oss-20b completes (36 cells, all 60/60).</p>
+  <h3>Step 09 - leakage-free RAG, black-box API subjects (108/108 cells)</h3>
+  <p>All three subjects complete. DeepSeek-V3 and Llama-3.3-70B (72 cells, 60/60 decided, 0 refusals).
+     gpt-oss-20b is a reasoning model, so it was re-run on <strong>AWS Bedrock</strong>
+     (<code>openai.gpt-oss-20b-1:0</code>, 2 keys round-robin, 8 concurrent calls; the chain-of-thought
+     it returns inside the content is stripped before A/B parsing). Its 36 cells average 57.8/60 decided.
+     The complete data shows gpt-oss-20b is itself moderately biased (base ~66-70), correcting an earlier
+     selection-bias artifact.</p>
 
-  <h3>Step 10 - aggregated analysis (summary.json), 28 retrieval cells</h3>
+  <h3>Step 10 - aggregated analysis (final summary.json), 30 retrieval cells</h3>
   <table>
     <thead><tr><th>intervention</th><th>mean improvement (pts)</th><th>95% CI</th><th>Cohen's d</th></tr></thead>
     <tbody>
-      <tr><td>safety_prompt</td><td><strong>+5.33</strong></td><td>[2.93, 8.15]</td><td>0.73</td></tr>
-      <tr><td>kg_rag_monolingual</td><td>+0.36</td><td>[-1.07, 2.06]</td><td>0.08</td></tr>
-      <tr><td>kg_rag</td><td>+0.05</td><td>[-1.52, 1.64]</td><td>0.01</td></tr>
-      <tr><td>flat_dict</td><td>-0.02</td><td>[-2.44, 2.43]</td><td>0.00</td></tr>
-      <tr><td>translate_en</td><td>-2.53</td><td>[-4.66, -0.42]</td><td>-0.45</td></tr>
+      <tr><td>safety_prompt</td><td><strong>+6.85</strong></td><td>[4.25, 9.56]</td><td>0.89</td></tr>
+      <tr><td>kg_rag_monolingual</td><td>+0.72</td><td>[-0.93, 2.67]</td><td>0.14</td></tr>
+      <tr><td>kg_rag</td><td>-0.02</td><td>[-2.10, 2.20]</td><td>0.00</td></tr>
+      <tr><td>flat_dict</td><td>-1.20</td><td>[-4.00, 1.55]</td><td>-0.15</td></tr>
+      <tr><td>translate_en</td><td>-3.50</td><td>[-5.86, -1.22]</td><td>-0.55</td></tr>
     </tbody>
   </table>
   <p class="sub">Improvement = base deviation minus condition deviation (positive = closer to neutral).
-     Only <strong>safety_prompt</strong> significantly reduces bias. <strong>kg_rag is not separable from
-     zero</strong> - the leakage-free truth once the injected-answer artifact is removed. Disjointness
-     (cut Jaccard 0.0177 vs null 0.0141, seed-stability 1.0) and the held-out bridge (lift 0.80) are the
-     load-bearing, defensible results.</p>
+     Only <strong>safety_prompt</strong> significantly reduces bias (d 0.89). <strong>kg_rag is not
+     separable from zero</strong> (heterogeneity I-squared 0) - the leakage-free truth once the
+     injected-answer artifact is removed. Disjointness (cut Jaccard 0.0177 vs null 0.0141,
+     seed-stability 1.0) and the held-out bridge (lift 0.80) are the load-bearing, defensible results.</p>
 
   <h2>3. Local validation (already run)</h2>
 

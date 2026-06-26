@@ -117,9 +117,10 @@
   ],
   "huggingface_token_present": true,
   "flash_attention": {
-    "torch": "2.5.1+cu121",
-    "cuda": "12.1",
-    "cuda_available": true,
-    "flash_attn": "2.7.4.post1"
+    "torch": null,
+    "cuda": null,
+    "cuda_available": false,
+    "flash_attn": "not_installed",
+    "torch_error": "ModuleNotFoundError"
   }
 }
